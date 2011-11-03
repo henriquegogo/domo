@@ -7,11 +7,15 @@
       var who = $(this).attr('name') ? $(this) : $(this).children('[name]');
       var key = who.attr('name');
 
-      var value = who.children('[name]').size() > 0 && !who.is('select') ? who.objective() :
-                  who.val() ? who.val() :
-                  who.is('select') ? who.val() : who.text();
+      var value = who.children('[name]').size() > 0 ? who.objective() :
+                  who.val() ? who.val() : who.text();
+      
+      value = who.is('select') ? who.val() :
+              who.is('[type=checkbox]') ? $("[name="+ $(this).attr('name') +"]:checked")[0] ? true : false :
+              who.is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
+              value;
 
-      if (key) result[key] = (result[key] && !$.isArray(result[key])) ? Array(result[key], value) :
+      if (key) result[key] = (result[key] && !$.isArray(result[key]) && !who.is('[type=radio]')) ? Array(result[key], value) :
                              $.isArray(result[key]) ? append(result[key], value) : value;
     });
     
