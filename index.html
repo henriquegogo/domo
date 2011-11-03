@@ -25,11 +25,11 @@
   <ul name="lista">
     <li name="item">Primeiro</li>
     <li name="item">Segundo</li>
-    <li name="item"><p><b name="subitem">Manifesto</b></p> da <b name="subitem">vida</b></li>
+    <li><p><b name="subitem">Manifesto</b></p> da <b name="subitem">vida</b></li>
   </ul>
-  <p>
-    <b>Item 1</b>
-    <b>Item 2</b>
+  <p name="paragraph">
+    <b>Item <u><i name="number">1</i></u></b>
+    <b>Item <u name="number"><i>2</i></u></b>
     <b>Item 3</b>
     <b>Item 4</b>
   </p>
@@ -38,7 +38,7 @@
   <form name="formu">
     <input type="text" name="input" value="Name">
     <textarea name="textarea">Multiline</textarea>
-    <input type="radio" name="radiobutton" value="104">
+    <input type="radio" name="radiobutton" value="104" checked>
     <input type="radio" name="radiobutton" value="107">
     <input type="checkbox" name="checkbox">
     <select name="combobox">
@@ -47,7 +47,7 @@
     </select>
 
     <select name="multicombobox" multiple>
-      <option name="opt1">Option 1</option>
+      <option name="opt1" selected>Option 1</option>
       <option name="opt2">Option 2</option>
     </select>
   </form>
