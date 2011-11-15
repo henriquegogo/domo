@@ -7,8 +7,9 @@
   <script src="jquery-1.6.2.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="jquery-objective.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body>
-  <table name="tabela">
+<body name="corpo">
+  <table>
+    <tbody name="tabela">
     <tr name="linha">
       <td name="col">Col 01</td>
       <td>Col 02</td>
@@ -21,11 +22,13 @@
       <td name="col">Col 21</td>
       <td name="col">Col 22</td>
     </tr>
+    </tbody>
   </table>
   <ul name="lista">
     <li name="item">Primeiro</li>
     <li name="item">Segundo</li>
     <li><p><b name="subitem">Manifesto</b></p> da <b name="subitem">vida</b></li>
+    <li name="item"><div><p><b name="subitem">Manifesto</b></p></div> da <b name="subitem">vida</b></li>
   </ul>
   <p name="paragraph">
     <b>Item <u><i name="number">1</i></u></b>
@@ -34,6 +37,8 @@
     <b>Item 4</b>
   </p>
   <p>Hey <b>guys</b>, i'm a simple<b name="thisguy">This guy need to come</b> information</p>
+  <p>Hey <b>guys</b>, i'm a simple<div><span><b name="thistoo">This guy too</b></span></div> information</p>
+  <span><g><p>Hey <b>guys</b>, i'm a simple<div><span><b name="thistootoo">And <b name="dont">this</b></b></span></div> information</p></g></span>
   <p>Other P</p>
   <form name="formu">
     <input type="text" name="input" value="Name">
