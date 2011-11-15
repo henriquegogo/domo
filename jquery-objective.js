@@ -15,8 +15,6 @@
               who.is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
               value;
 
-      console.log(result[key]);
-
       if (key) result[key] = (result[key] && !$.isArray(result[key]) && !who.is('[type=radio]')) ? Array(result[key], value) :
                              $.isArray(result[key]) ? append(result[key], value) : value;
     });
