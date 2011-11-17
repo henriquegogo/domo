@@ -11,7 +11,7 @@
                   who.val() ? who.val() : who.text();
       
       value = who.is('select') ? who.val() :
-              who.is('[type=checkbox]') ? $("[name="+ $(this).attr('name') +"]:checked")[0] ? true : false :
+              who.is('[type=checkbox]') ? who.prop('checked') :
               who.is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
               value;
 
@@ -26,8 +26,12 @@
     for (var prop in object) {
       var who = $('[name=' + prop + ']', this);
 
-      (typeof object[prop] == "object") ? who.obj2dom(object[prop]) :
-                                          who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
+      who.is('select') ? who.val(object[prop]) :
+      who.is('[type=checkbox]') ? who.prop("checked", object[prop]) :
+      who.is('[type=radio]') ? $("[name=radiobutton][value=" + object[prop] + "]").prop("checked", true) :
+      $.isPlainObject(object[prop]) ? who.obj2dom(object[prop]) :
+      $.isArray(object[prop]) ? console.log(object[prop] + " é array") :
+      who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
     }
   };
 })(jQuery);
