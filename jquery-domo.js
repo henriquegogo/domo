@@ -1,6 +1,16 @@
 (function ($) {
   $.fn.domo = function(object) {
     if (typeof object == 'object') {
+      var cloneLikeArray = function(who, arr) {
+        var container = $("<div />");
+
+        for (var item in arr) {
+          container.append(who.clone().html(arr[item]));
+        }
+
+        who.replaceWith(container.html());
+      }
+
       for (var prop in object) {
         var who = $('[name=' + prop + ']', this);
 
@@ -8,7 +18,7 @@
         who.is('[type=checkbox]') ? who.prop("checked", object[prop]) :
         who.is('[type=radio]') ? $("[name=radiobutton][value=" + object[prop] + "]").prop("checked", true) :
         $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
-        $.isArray(object[prop]) ? console.log(object[prop] + " é array") :
+        $.isArray(object[prop]) ? cloneLikeArray(who, object[prop]) :
         who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
       }
 
