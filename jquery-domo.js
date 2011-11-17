@@ -1,16 +1,16 @@
 (function ($) {
   $.fn.domo = function(object) {
+      // ###################
+      // ## Object to DOM ##
+      // ###################
     if (typeof object == 'object') {
-      var cloneLikeArray = function(who, arr) {
+      var cloneAsArray = function(who, arr) {
         var container = $("<div />");
 
         for (var item in arr) {
           clone = who.clone();
 
-          console.log(arr[item]);
-          console.log($("> [name='" + arr[item] + "']"));
-
-          //$.isPlainObject(arr[item]) ? cloneLikeArray($("> [name=" + arr[item] + "]", who), arr[item]) :
+          $.isPlainObject(arr[item]) ? false :
           clone.is('select') ? $("option[value='" + arr[item] + "'], option:contains(" + arr[item] + ")", clone).attr('selected', 'true') :
           clone.is('[type=checkbox]') ? clone.prop('checked', arr[item]) :
           clone.is('input') ? clone.attr('value', arr[item]) : clone.text(arr[item]);
@@ -20,11 +20,30 @@
         who.replaceWith(container.html());
       }
 
+      var doArray = function(who, arr) {
+        var container = $("<div />");
+
+        if (who.length != arr.length) {
+          var clone = $(who[0]);
+
+          for (var i = 0; i < arr.length; i++) {
+            $.isPlainObject(arr[i]) ? false :
+            clone.is('select') ? $("option[value='" + arr[i] + "'], option:contains(" + arr[i] + ")", clone).attr('selected', 'true') :
+            clone.is('[type=checkbox]') ? clone.prop('checked', arr[i]) :
+            clone.is('input') ? clone.attr('value', arr[i]) : clone.text(arr[i]);
+          
+            container.append($("<div />").html(clone).html());
+          }
+
+          who.replaceWith(container.html());
+        }
+      }
+
       for (var prop in object) {
         var who = $('> [name=' + prop + ']', this);
         
         $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
-        $.isArray(object[prop]) && !who.is('[multiple], [type=radio]') ? cloneLikeArray(who, object[prop]) :
+        $.isArray(object[prop]) && !who.is('[multiple], [type=radio]') ? doArray(who, object[prop]) :
         who.is('select') ? who.val(object[prop]) :
         who.is('[type=checkbox]') ? who.prop("checked", object[prop]) :
         who.is('[type=radio]') ? $("> [name="+ prop +"][value=" + object[prop] + "]", this).prop("checked", true) :
@@ -32,7 +51,9 @@
       }
 
     } else {
-
+      // ###################
+      // ## DOM to object ##
+      // ###################
       var append = function(array, value) { array.push(value); return array }
       var result = {};
       
