@@ -5,20 +5,26 @@
         var container = $("<div />");
 
         for (var item in arr) {
-          container.append(who.clone().html(arr[item]));
-        }
+          clone = who.clone();
 
+          clone.is('select') ? $("option[value='" + arr[item] + "'], option:contains(" + arr[item] + ")", clone).attr('selected', 'true') :
+          clone.is('[type=checkbox]') ? clone.prop('checked', arr[item]) :
+          $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
+          clone.is('input') ? clone.attr('value', arr[item]) : clone.text(arr[item]);
+
+          container.append(clone);
+        }
         who.replaceWith(container.html());
       }
 
       for (var prop in object) {
-        var who = $('[name=' + prop + ']', this);
-
+        var who = $('> [name=' + prop + ']', this);
+        
+        $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
+        $.isArray(object[prop]) && !who.is('[multiple]') ? cloneLikeArray(who, object[prop]) :
         who.is('select') ? who.val(object[prop]) :
         who.is('[type=checkbox]') ? who.prop("checked", object[prop]) :
         who.is('[type=radio]') ? $("[name=radiobutton][value=" + object[prop] + "]").prop("checked", true) :
-        $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
-        $.isArray(object[prop]) ? cloneLikeArray(who, object[prop]) :
         who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
       }
 
