@@ -24,8 +24,10 @@
 
   $.fn.obj2dom = function(object) {
     for (var prop in object) {
-      if (typeof object[prop])
-        $('[name=' + prop + ']', this).html(object[prop]);
+      var who = $('[name=' + prop + ']', this);
+
+      (typeof object[prop] == "object") ? who.obj2dom(object[prop]) :
+                                          who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
     }
   };
 })(jQuery);
