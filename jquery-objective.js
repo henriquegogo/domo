@@ -1,5 +1,5 @@
 (function ($) {
-  $.fn.objective = function() {
+  $.fn.dom2obj = function() {
     var append = function(array, value) { array.push(value); return array }
     var result = {};
     
@@ -7,7 +7,7 @@
       var who = $(this).attr('name') ? $(this) : $(this).find('> [name], > :not([name]) [name]');
       var key = who.attr('name');
 
-      var value = who.find('> [name], > :not([name]) [name]').size() > 0 ? who.objective() :
+      var value = who.find('> [name], > :not([name]) [name]').size() > 0 ? who.dom2obj() :
                   who.val() ? who.val() : who.text();
       
       value = who.is('select') ? who.val() :
@@ -20,5 +20,12 @@
     });
     
     return result;
+  };
+
+  $.fn.obj2dom = function(object) {
+    for (var prop in object) {
+      if (typeof object[prop])
+        $('[name=' + prop + ']', this).html(object[prop]);
+    }
   };
 })(jQuery);
