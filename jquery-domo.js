@@ -32,7 +32,7 @@
       }
 
       for (var prop in object) {
-        var who = $('> [name=' + prop + '], > :not([name]) [name=' + prop + ']', this);
+        var who = $("> [name='" + prop + "'], > :not([name]) [name='" + prop + "']", this);
         applyValues(who, object, prop)
       }
 
