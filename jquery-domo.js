@@ -44,10 +44,10 @@
       var result = {};
       
       $(this).children().each(function() {
-        var who = $(this).attr('name') ? $(this) : $(this).find('> [name], > :not([name]) [name]');
+        var who = $(this).attr('name') ? $(this) : $(this).find('> [name], > :not([name]) [name]:eq(0)');
         var key = who.attr('name');
 
-        var value = who.find('> [name], > :not([name]) [name]').size() > 0 ? who.domo() :
+        var value = who.find('> [name], > :not([name]) [name]:eq(0)').size() > 0 ? who.domo() :
                     who.val() ? who.val() : who.text();
         
         value = who.is('select') ? who.val() :
