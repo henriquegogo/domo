@@ -43,9 +43,7 @@
       var append = function(array, value) { array.push(value); return array }
       var result = {};
       
-      var firstChild = $('[name]:eq(0)', this).parent();
-
-      firstChild.children().each(function() {
+      $(this).children().each(function() {
         var who = $(this).attr('name') ? $(this) : $(this).find('> [name], > :not([name]) [name]');
         var key = who.attr('name');
 
