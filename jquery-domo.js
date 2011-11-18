@@ -4,6 +4,9 @@
     // ## Object to DOM ##
     // ###################
     if (typeof object == 'object') {
+      $('[type=checkbox], [type=radio]', this).removeAttr('checked');
+      $('option', this).removeAttr('selected');
+
       var stringDom = function(who) {
         return $("<div />").html(who).html();
       }
@@ -11,13 +14,15 @@
       var doArray = function(who, arr) {
         var container = $("<div />");
 
-        var clone = who.eq(0).clone();
-
         for (var i = 0; i < arr.length; i++) {
+          var clone = who.eq(0).clone();
+
           $.isPlainObject(arr[i]) ? clone.domo(arr[i]) :
-          clone.is('select') ? $("option[value='" + arr[i] + "'], option:contains(" + arr[i] + ")", clone).attr('selected', 'true') :
-          clone.is('[type=checkbox]') ? clone.prop('checked', arr[i]) :
-          clone.is('input') ? clone.attr('value', arr[i]) : clone.text(arr[i]);
+          $.isArray(arr[i]) && !who.is('[multiple], [type=radio]') ? doArray(clone, arr[i]) :
+          clone.is('select') ? clone.find("option[value='" + arr[i] + "'], option:contains(" + arr[i] + ")").attr('selected', 'true') :
+          clone.is('[type=checkbox]') ? clone.attr('checked', arr[i]) :
+          clone.is('[type=radio]') ? clone.filter("[value=" + arr[i] + "]").attr("checked", true) :
+          clone.is('input') ? clone.attr('value', arr[i]) : clone.html(arr[i]);
         
           container.append(stringDom(clone));
         }
@@ -34,10 +39,10 @@
 
         $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
         $.isArray(object[prop]) && !who.is('[multiple], [type=radio]') ? doArray(who, object[prop]) :
-        who.is('select') ? who.val(object[prop]) :
-        who.is('[type=checkbox]') ? who.prop("checked", object[prop]) :
-        who.is('[type=radio]') ? who.filter("[value=" + object[prop] + "]").prop("checked", true) :
-        who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
+        who.is('select') ? who.find("option[value='" + object[prop] + "'], option:contains(" + object[prop] + ")").attr('selected', 'true') :
+        who.is('[type=checkbox]') ? who.attr('checked', object[prop]) :
+        who.is('[type=radio]') ? who.filter("[value=" + object[prop] + "]").attr("checked", true) :
+        who.is('input') ? who.attr('value', object[prop]) : who.html(object[prop]);
       }
 
     } else {
