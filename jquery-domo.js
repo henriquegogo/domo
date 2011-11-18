@@ -4,49 +4,40 @@
       // ## Object to DOM ##
       // ###################
     if (typeof object == 'object') {
-      var cloneAsArray = function(who, arr) {
-        var container = $("<div />");
-
-        for (var item in arr) {
-          clone = who.clone();
-
-          $.isPlainObject(arr[item]) ? false :
-          clone.is('select') ? $("option[value='" + arr[item] + "'], option:contains(" + arr[item] + ")", clone).attr('selected', 'true') :
-          clone.is('[type=checkbox]') ? clone.prop('checked', arr[item]) :
-          clone.is('input') ? clone.attr('value', arr[item]) : clone.text(arr[item]);
-
-          container.append(clone);
-        }
-        who.replaceWith(container.html());
+      var stringDom = function(who) {
+        return $("<div />").html(who).html();
       }
 
       var doArray = function(who, arr) {
         var container = $("<div />");
 
-        if (who.length != arr.length) {
-          var clone = $(who[0]);
+        var clone = who.eq(0).clone();
 
-          for (var i = 0; i < arr.length; i++) {
-            $.isPlainObject(arr[i]) ? false :
-            clone.is('select') ? $("option[value='" + arr[i] + "'], option:contains(" + arr[i] + ")", clone).attr('selected', 'true') :
-            clone.is('[type=checkbox]') ? clone.prop('checked', arr[i]) :
-            clone.is('input') ? clone.attr('value', arr[i]) : clone.text(arr[i]);
-          
-            container.append($("<div />").html(clone).html());
-          }
-
-          who.replaceWith(container.html());
+        for (var i = 0; i < arr.length; i++) {
+          $.isPlainObject(arr[i]) ? false :
+          clone.is('select') ? $("option[value='" + arr[i] + "'], option:contains(" + arr[i] + ")", clone).attr('selected', 'true') :
+          clone.is('[type=checkbox]') ? clone.prop('checked', arr[i]) :
+          clone.is('input') ? clone.attr('value', arr[i]) : clone.text(arr[i]);
+        
+          container.append(stringDom(clone));
         }
+        
+        if (who.length > 1) {
+          who.replaceWith(who.eq(0));
+        }
+  
+        who.replaceWith(container.html());
       }
 
       for (var prop in object) {
-        var who = $('> [name=' + prop + ']', this);
-        
+        var who = $('> [name=' + prop + '], > :not([name]) [name=' + prop + ']', this);
+
         $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
         $.isArray(object[prop]) && !who.is('[multiple], [type=radio]') ? doArray(who, object[prop]) :
+        //$.isArray(object[prop]) && !who.is('[multiple], [type=radio]') ? false :
         who.is('select') ? who.val(object[prop]) :
         who.is('[type=checkbox]') ? who.prop("checked", object[prop]) :
-        who.is('[type=radio]') ? $("> [name="+ prop +"][value=" + object[prop] + "]", this).prop("checked", true) :
+        who.is('[type=radio]') ? who.filter("[value=" + object[prop] + "]").prop("checked", true) :
         who.is('input') ? who.val(object[prop]) : who.text(object[prop]);
       }
 
