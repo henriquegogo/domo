@@ -59,6 +59,7 @@
                                $.isArray(result[key]) ? append(result[key], value) : value;
       });
       
+      result._self = JSON.parse(JSON.stringify(result));
       return result;
     }
   }
