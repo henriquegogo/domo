@@ -1,8 +1,15 @@
 (function ($) {
+  $(document).ready(function() {
+    window.body = $("body").domo();
+
+    window.body.sync = function() {
+      $("body").domo( window.body );
+      window.body = $("body").domo();
+    }
+  });
+
   $.fn.domo = function(object) {
-    // ###################
     // ## Object to DOM ##
-    // ###################
     if (typeof object == 'object') {
       $('[type=checkbox], [type=radio]', this).removeAttr('checked');
       $('option', this).removeAttr('selected');
@@ -39,9 +46,7 @@
       return this;
 
     } else {
-      // ###################
       // ## DOM to object ##
-      // ###################
       var append = function(array, value) { array.push(value); return array }
       var result = {};
       
