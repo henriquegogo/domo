@@ -65,6 +65,7 @@
   }
 
   $.fn.objective = function() {
+    var append = function(array, value) { array.push(value); return array }
     var result = {};
     
     $(this).children().each(function() {
@@ -79,7 +80,8 @@
                 $(this).is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
                 value;
         
-        result[key] = result[key] ? Array(result[key], value) : value;
+        result[key] = (result[key] && !$.isArray(result[key]) && !$(this).is('[type=radio]')) ? Array(result[key], value) :
+                      $.isArray(result[key]) ? append(result[key], value) : value;
 
       } else {
         result = $(this).objective();
