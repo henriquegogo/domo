@@ -47,7 +47,7 @@
         var key = $(this).attr("name");
 
         if (key) {
-          var value = $(this).children().size() > 0 ? $(this).objective() :
+          var value = $(this).children().size() > 0 ? $(this).domo() :
                       $(this).val() ? $(this).val() : $(this).text();
 
           value = $(this).is('select') ? $(this).val() :
@@ -59,7 +59,7 @@
                         $.isArray(result[key]) ? append(result[key], value) : value;
 
         } else {
-          $.extend(result, $(this).objective());
+          $.extend(result, $(this).domo());
         }
       });
       
