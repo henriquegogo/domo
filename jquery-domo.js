@@ -63,4 +63,30 @@
       return result;
     }
   }
+
+  $.fn.objective = function() {
+    var result = {};
+    
+    $(this).children().each(function() {
+      if ($(this).attr("name")) {
+        var key = $(this).attr("name");
+
+        var value = $(this).children().size() > 0 ? $(this).objective() :
+                    $(this).val() ? $(this).val() : $(this).text();
+
+        value = $(this).is('select') ? $(this).val() :
+                $(this).is('[type=checkbox]') ? $(this).prop('checked') :
+                $(this).is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
+                value;
+        
+        result[key] = result[key] ? Array(result[key], value) : value;
+
+      } else {
+        result = $(this).objective();
+
+      }
+    });
+    
+    return result;
+  }
 })(jQuery);
