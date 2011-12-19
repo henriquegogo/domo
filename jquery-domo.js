@@ -11,7 +11,7 @@
 
       var applyValues = function(who, object, prop) {
         $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
-        $.isArray(object[prop]) && !who.is('[multiple], [type=radio]') ? doArray(who, object[prop]) :
+        $.isArray(object[prop]) && !who.is('[type=radio]') ? doArray(who, object[prop]) :
         who.is('select') ? who.find("option[value='" + object[prop] + "'], option:contains(" + object[prop] + ")").attr('selected', 'true') :
         who.is('[type=checkbox]') ? who.attr('checked', object[prop]) :
         who.is('[type=radio]') ? who.filter("[value=" + object[prop] + "]").attr("checked", true) :
@@ -32,10 +32,12 @@
       }
 
       for (var prop in object) {
-        var who = $("> [name='" + prop + "'], > :not([name]) [name='" + prop + "']", this);
+        var who = $("[name='" + prop + "']", this);
         applyValues(who, object, prop)
       }
+
       return this;
+
     } else {
       // ###################
       // ## DOM to object ##
@@ -62,7 +64,7 @@
           $.extend(result, $(this).domo());
         }
       });
-      
+    
       return result;
     }
   }
