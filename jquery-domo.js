@@ -1,13 +1,4 @@
 (function ($) {
-  $(document).ready(function() {
-    window.body = $("body").domo();
-
-    window.body.sync = function() {
-      $("body").domo( window.body );
-      window.body = $("body").domo();
-    }
-  });
-
   $.fn.domo = function(object) {
     // ## Object to DOM ##
     if (typeof object == 'object') {
@@ -73,4 +64,13 @@
       return result;
     }
   }
+
+  $(document).ready(function() {
+    window.body = $("body").domo();
+
+    window.body.sync = function() {
+      $("body").domo( window.body );
+      window.body = $("body").domo();
+    }
+  });
 })(jQuery);
