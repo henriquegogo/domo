@@ -70,7 +70,9 @@
 
     window.body.sync = function() {
       $("body").domo( window.body );
+      var sync = window.body.sync;
       window.body = $("body").domo();
+      window.body.sync = sync;
     }
   });
 })(jQuery);
