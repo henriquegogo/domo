@@ -84,7 +84,7 @@
                       $.isArray(result[key]) ? append(result[key], value) : value;
 
       } else {
-        result = $(this).objective();
+        $.extend(result, $(this).objective());
 
       }
     });
