@@ -69,15 +69,13 @@
 
   $.domo = function() {
     window.body = $("body").domo();
+    window.body.sync = function() { $("body").domo( window.body ) };
+    var d = new Date;
+    window.body._timestamp = d.toISOString();
 
-    window.body.sync = function() {
-      $("body").domo( window.body );
-    }
-
-    $(document).delegate("[name]", "change blur", function() {
-      var sync = window.body.sync;
-      window.body = $("body").domo();
-      window.body.sync = sync;
+    $(document).undelegate("[name]", "change.domo blur.domo")
+               .delegate("[name]", "change.domo blur.domo", function() {
+      $.domo();
     });
   }
 
