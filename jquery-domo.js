@@ -70,8 +70,7 @@
   $.domo = function() {
     window.body = $("body").domo();
     window.body.sync = function() { $("body").domo( window.body ) };
-    var d = new Date;
-    window.body._timestamp = d.toISOString();
+    window.body_sync = JSON.stringify(window.body);
 
     $(document).undelegate("[name]", "change.domo blur.domo")
                .delegate("[name]", "change.domo blur.domo", function() {
@@ -79,7 +78,15 @@
     });
   }
 
+  var verifyChanges = function() {
+    if (JSON.stringify(body) != body_sync) {
+      body.sync();
+      window.body_sync = JSON.stringify(window.body);
+    }
+  }
+
   $(document).ready(function() {
     $.domo();
+    setInterval(verifyChanges, 100);
   });
 })(jQuery);
