@@ -69,18 +69,17 @@
 
   $.domo = function() {
     window.body = $("body").domo();
-    window.body.sync = function() { $("body").domo( window.body ) };
     window.body_sync = JSON.stringify(window.body);
 
-    $(document).undelegate("[name]", "change.domo blur.domo")
-               .delegate("[name]", "change.domo blur.domo", function() {
+    $(document).off("change.domo blur.domo", "[name]")
+               .on("change.domo blur.domo", "[name]", function() {
       $.domo();
     });
   }
 
   var verifyChanges = function() {
     if (JSON.stringify(body) != body_sync) {
-      body.sync();
+      $("body").domo( window.body );
       window.body_sync = JSON.stringify(window.body);
     }
   }
