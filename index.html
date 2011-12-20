@@ -8,27 +8,28 @@
   <script src="jquery-domo.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-  <ul name="lista">
-    <li name="item">Primeiro</li>
-    <li name="item">Segundo</li>
-    <li name="item">Terceiro</li>
+  <ul>
+    <li name="lista">Primeiro</li>
+    <li name="lista">Segundo</li>
+    <li name="lista">Terceiro</li>
   </ul>
 
-  <ol name="listaOrdenada">
-    <li name="item[0]">Item ordenado</li>
+  <ol>
+    <li name="listaOrdenada[]">Item ordenado</li>
+    <li name="listaOrdenada[]">Item ordenado2</li>
   </ol>
 
   <table>
-    <tbody name="tabela">
-    <tr name="linha">
+    <tbody>
+    <tr name="grid">
       <td name="col">Col 01</td>
       <td name="col">Col 02</td>
     </tr>
-    <tr name="linha">
+    <tr name="grid">
       <td name="col">Col 1</td>
       <td name="col">Col 2</td>
     </tr>
-    <tr name="linha">
+    <tr name="grid">
       <td name="col">Col 21</td>
       <td name="col">Col 22</td>
     </tr>
@@ -38,6 +39,7 @@
   <form name="form1">
     <div class="field">
       <input type="text" name="input" value="Name">
+      <input type="text" name="input" value="Name complete">
     </div>
     <textarea name="textarea">Multiline</textarea>
     <input type="radio" name="radiobutton" value="104" checked>
@@ -53,15 +55,11 @@
   <form name="form2">
     <input type="radio" name="radiobuttoneaaa" value="105" checked>
     <input type="radio" name="radiobuttoneaaa" value="106">
-    <input type="text" name="inputextra" value="Nomenzarão">
-    <input type="text" name="inputextra" value="Nomenzarão 2">
+    <input type="text" name="inputmais" value="Nomenzarão">
+    <input type="text" name="inputmais" value="Nomenzarão 2">
     <select name="combobox">
       <option>Option 1</option>
       <option selected>Option 2</option>
-    </select>
-    <select name="combobox">
-      <option selected>Option 1</option>
-      <option>Option 2</option>
     </select>
     <div name="itensArray">
       <input type="checkbox" name="checkextra" checked>

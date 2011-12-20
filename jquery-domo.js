@@ -18,7 +18,7 @@
 
       var doArray = function(who, arr) {
         var container = $("<div />");
-
+        
         for (var i = 0; i < arr.length; i++) {
           var clone = who.eq(0).clone();
           applyValues(clone, arr, i)
@@ -30,7 +30,7 @@
       }
 
       for (var prop in object) {
-        var who = $("[name='" + prop + "']", this);
+        var who = ( $("[name='" + prop + "']", this).length ) ? $("[name='" + prop + "']", this) : $("[name='" + prop + "[]']", this);
         applyValues(who, object, prop)
       }
 
@@ -45,6 +45,7 @@
         var key = $(this).attr("name");
 
         if (key) {
+          var key = key.replace(/\[]$/, "");
           var value = $(this).children().size() > 0 ? $(this).domo() :
                       $(this).val() ? $(this).val() : $(this).text();
 
@@ -53,8 +54,9 @@
                   $(this).is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
                   value;
           
-          result[key] = (result[key] && !$.isArray(result[key]) && !$(this).is('[type=radio]')) ? Array(result[key], value) :
-                        $.isArray(result[key]) ? append(result[key], value) : value;
+          result[key] = (result[key] && !$.isArray(result[key]) && !$(this).is('[type=radio]') || $(this).attr("name").match(/[]$/) ) ?
+                        Array(result[key], value) : $.isArray(result[key]) ?
+                        append(result[key], value) : value;
 
         } else {
           $.extend(result, $(this).domo());
@@ -72,7 +74,7 @@
       $("body").domo( window.body );
     }
 
-    $("[name]").change(function() {
+    $("[name]").blur(function() {
       var sync = window.body.sync;
       window.body = $("body").domo();
       window.body.sync = sync;
