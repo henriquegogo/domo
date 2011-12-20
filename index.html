@@ -8,36 +8,21 @@
   <script src="jquery-domo.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-  <div id="simple">
-    <ul name="lista">
-      <li name="item">Primeiro</li>
-      <li name="item">Segundo</li>
-      <li name="item">Terceiro</li>
-    </ul>
-    <table>
-      <tbody name="tabela">
-      <tr name="linha">
-        <td name="col">Col 01</td>
-      </tr>
-      <tr name="linha">
-        <td name="col">Col 1</td>
-        <td name="col">Col 2</td>
-      </tr>
-      <tr name="linha">
-        <td name="col">Col 21</td>
-        <td name="col">Col 22</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <ul name="lista">
+    <li name="item">Primeiro</li>
+    <li name="item">Segundo</li>
+    <li name="item">Terceiro</li>
+  </ul>
 
+  <ol name="listaOrdenada">
+    <li name="item[0]">Item ordenado</li>
+  </ol>
 
-<div><div><div><div><div><div><div><div id="ultimo">
-<div name="populado" style="float: left">
   <table>
     <tbody name="tabela">
     <tr name="linha">
       <td name="col">Col 01</td>
+      <td name="col">Col 02</td>
     </tr>
     <tr name="linha">
       <td name="col">Col 1</td>
@@ -49,22 +34,8 @@
     </tr>
     </tbody>
   </table>
-  <ul name="lista">
-    <li name="item">Primeiro</li>
-    <li name="item">Segundo</li>
-    <li name="item">Terceiro</li>
-  </ul>
-  <p name="paragraph">
-    <b>Item <u><i name="number">1</i></u></b>
-    <b>Item <u name="number"><i>2</i></u></b>
-    <b>Item 3</b>
-    <b>Item 4</b>
-  </p>
-  <p>Hey <b>guys</b>, i'm a simple<b name="thisguy">This guy need to come</b> information</p>
-  <p>Hey <b>guys</b>, i'm a simple<div><span><b name="thistoo">This guy too</b></span></div> information</p>
-  <span><g><p>Hey <b>guys</b>, i'm a simple<div><span><b name="thistootoo">And <b name="dont">this</b></b></span></div> information</p></g></span>
-  <p>Other P</p>
-  <form name="formu">
+
+  <form name="form1">
     <div class="field">
       <input type="text" name="input" value="Name">
     </div>
@@ -77,13 +48,9 @@
       <option>Option 1</option>
       <option>Option 2</option>
     </select>
-
-    <select name="multicombobox" multiple>
-      <option name="opt1" selected>MultiOption 1</option>
-      <option name="opt2">MultiOption 2</option>
-    </select>
   </form>
-  <form name="formu2">
+
+  <form name="form2">
     <input type="radio" name="radiobuttoneaaa" value="105" checked>
     <input type="radio" name="radiobuttoneaaa" value="106">
     <input type="text" name="inputextra" value="Nomenzarão">
@@ -119,66 +86,5 @@
       </select>
     </div>
   </form>
-</div>
-
-<div name="willbe" style="float: left">
-  <table>
-    <tbody name="tabela">
-    <tr name="linha">
-      <td name="col"></td>
-    </tr>
-    </tbody>
-  </table>
-  <ul name="lista">
-    <li name="item"></li>
-    <li name="item"></li>
-  </ul>
-  <p name="paragraph">
-    <b>Item <u><i name="number"></i></u></b>
-  </p>
-  <p>Hey <b>guys</b>, i'm a simple<b name="thisguy"></b> information</p>
-  <p>Hey <b>guys</b>, i'm a simple<div><span><b name="thistoo"></b></span></div> information</p>
-  <span><g><p>Hey <b>guys</b>, i'm a simple<div><span><b name="thistootoo">And <b name="dont"></b></b></span></div> information</p></g></span>
-  <p>Other P</p>
-  <form name="formu">
-    <div class="field">
-      <input type="text" name="input">
-    </div>
-    <textarea name="textarea"></textarea>
-    <input type="radio" name="radiobutton" value="104">
-    <input type="radio" name="radiobutton" value="107">
-    <input type="checkbox" name="checkbox">
-    <input type="checkbox" name="checkbox2">
-    <select name="combobox">
-      <option>Option 1</option>
-      <option>Option 2</option>
-    </select>
-
-    <select name="multicombobox" multiple>
-      <option name="opt1">MultiOption 1</option>
-      <option name="opt2">MultiOption 2</option>
-    </select>
-  </form>
-  <form name="formu2">
-    <input type="radio" name="radiobuttoneaaa" value="105">
-    <input type="radio" name="radiobuttoneaaa" value="106">
-    <input type="text" name="inputextra">
-    <select name="combobox">
-      <option>Option 1</option>
-      <option>Option 2</option>
-    </select>
-    <div name="itensArray">
-      <input type="checkbox" name="checkextra">
-      <input type="text" name="inputextra">
-      <input type="radio" name="radiobuttonsez" value="104">
-      <input type="radio" name="radiobuttonsez" value="107">
-      <select name="combobox">
-        <option>Option 1</option>
-        <option>Option 2</option>
-      </select>
-    </div>
-  </form>
-</div>
-</div></div></div></div></div></div></div></div>
 </body>
 </html>
