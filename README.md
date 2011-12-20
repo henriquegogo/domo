@@ -4,6 +4,9 @@
 $('body').domo()
 ### Object to DOM
 $('body').domo(json)
+### Or...
+Simple change/access window.body object
+Ex: console.log(body);
 ## Want to use in console?
 <pre>
 var scriptJquery = document.createElement(&quot;script&quot;);
