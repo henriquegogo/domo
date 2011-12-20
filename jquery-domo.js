@@ -67,17 +67,21 @@
     }
   }
 
-  $(document).ready(function() {
+  $.domo = function() {
     window.body = $("body").domo();
 
     window.body.sync = function() {
       $("body").domo( window.body );
     }
 
-    $("[name]").blur(function() {
+    $(document).delegate("[name]", "change blur", function() {
       var sync = window.body.sync;
       window.body = $("body").domo();
       window.body.sync = sync;
     });
+  }
+
+  $(document).ready(function() {
+    $.domo();
   });
 })(jQuery);
