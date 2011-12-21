@@ -84,5 +84,35 @@
       </select>
     </div>
   </form>
+
+  <div id="twitter">
+    <ul>
+      <li name="tweets[]">
+        <p name="text"></p>
+        <div name="user">
+          <b name="name"></b>
+          <p name="url"></p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <textarea style="width: 1024px; height: 280px; border: none" readonly>
+This command:
+$.getJSON("http://twitter.com/status/user_timeline/henriquegogo.json?callback=?", function(tweets) { body.tweets = tweets });
+
+Will populate this dom
+<ul>
+  <li name="tweets[]">
+    <p name="text"></p>
+    <div name="user">
+      <b name="name"></b>
+      <p name="url"></p>
+    </div>
+  </li>
+</ul>
+
+Try!
+  </textarea>
 </body>
 </html>
