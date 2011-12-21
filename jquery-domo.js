@@ -68,20 +68,25 @@
   }
 
   $.domo = function() {
-    window.body = $("body").domo();
-    window.body_sync = JSON.stringify(window.body);
+    window.domo = window.domo || {};
+    window.domo.body = $("body").domo();
+    window.domo.sync = JSON.stringify(window.domo.body);
+    window.domo.onchange = window.domo.onchange || function() {};
+    window.domo.onchange();
+    window.body = window.domo.body;
 
     $(document)
-      .undelegate("[name]", "change.domo blur.domo")
-      .delegate("[name]", "change.domo blur.domo", function() {
+      .undelegate("[name]", "change.domo")
+      .delegate("[name]", "change.domo", function() {
         $.domo();
+        return false;
     });
   }
 
   var verifyChanges = function() {
-    if (JSON.stringify(window.body) != window.body_sync) {
-      $("body").domo( window.body );
-      window.body_sync = JSON.stringify(window.body);
+    if (JSON.stringify(window.domo.body) != window.domo.sync) {
+      $("body").domo( window.domo.body );
+      $.domo();
     }
   };
 
