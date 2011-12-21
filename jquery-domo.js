@@ -80,7 +80,7 @@
 
   var verifyChanges = function() {
     if (JSON.stringify(window.body) != window.body_sync) {
-      $("body").domo( window.body );
+      //$("body").domo( window.body );
       window.body_sync = JSON.stringify(window.body);
     }
   };
