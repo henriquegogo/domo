@@ -71,9 +71,10 @@
     window.body = $("body").domo();
     window.body_sync = JSON.stringify(window.body);
 
-    $(document).off("change.domo blur.domo", "[name]")
-               .on("change.domo blur.domo", "[name]", function() {
-      $.domo();
+    $(document)
+      .off("change.domo blur.domo", "[name]")
+      .on("change.domo blur.domo", "[name]", function() {
+        $.domo();
     });
   }
 
@@ -82,7 +83,7 @@
       $("body").domo( window.body );
       window.body_sync = JSON.stringify(window.body);
     }
-  }
+  };
 
   $(document).ready(function() {
     $.domo();
