@@ -78,7 +78,7 @@
   }
 
   var verifyChanges = function() {
-    if (JSON.stringify(body) != body_sync) {
+    if (JSON.stringify(window.body) != window.body_sync) {
       $("body").domo( window.body );
       window.body_sync = JSON.stringify(window.body);
     }
