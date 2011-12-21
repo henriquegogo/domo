@@ -72,8 +72,8 @@
     window.body_sync = JSON.stringify(window.body);
 
     $(document)
-      .off("change.domo blur.domo", "[name]")
-      .on("change.domo blur.domo", "[name]", function() {
+      .undelegate("[name]", "change.domo blur.domo")
+      .delegate("[name]", "change.domo blur.domo", function() {
         $.domo();
     });
   }
