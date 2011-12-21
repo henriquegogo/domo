@@ -10,7 +10,7 @@
       var applyValues = function(who, object, prop) {
         $.isPlainObject(object[prop]) ? who.domo(object[prop]) :
         $.isArray(object[prop]) && !who.is('[type=radio]') ? doArray(who, object[prop]) :
-        who.is('select') ? who.find("option[value='" + object[prop] + "'], option:contains(" + object[prop] + ")").attr('selected', 'true') :
+        who.is('select') ? who.find("option[value='" + object[prop] + "']").attr('selected', 'true') :
         who.is('[type=checkbox]') ? who.attr('checked', object[prop]) :
         who.is('[type=radio]') ? who.filter("[value=" + object[prop] + "]").attr("checked", true) :
         who.is('input') ? who.attr('value', object[prop]) : who.html(object[prop]);
@@ -80,7 +80,7 @@
 
   var verifyChanges = function() {
     if (JSON.stringify(window.body) != window.body_sync) {
-      //$("body").domo( window.body );
+      $("body").domo( window.body );
       window.body_sync = JSON.stringify(window.body);
     }
   };
