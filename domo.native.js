@@ -1,14 +1,22 @@
 //(function () {
+  // Some helpers
+  var isArray = function(array) {
+    return (typeof array == 'object' && array.length != undefined);
+  }
+  var append = function(array, value) { array.push(value); return array }
+
+  // Object to DOM
   var obj2dom = function(object) {
   };
 
+  // DOM to object
   var dom2obj = function() {
     var result = {};
     var el = this.children;
 
     for (var i = 0; i < el.length; i++) {
       var tag = el[i];
-      var key = tag.getAttribute("name");
+      var key = name = tag.getAttribute("name");
       
       if (key) {
         key = key.replace(/\[]$/, "");
@@ -20,9 +28,10 @@
                 (tag.type == 'radio' && !tag.checked) ? result[key] :
                 value;
 
-        // value = (result[key] && !$.isArray(result[key]) && !$(this).is('[type=radio]') || $(this).attr("name").match(/[]$/) ) ?
-        // Array(result[key], value) : $.isArray(result[key]) ?
-        // append(result[key], value) : value;
+        value = result[key] && !isArray(result[key]) && tag.type != 'radio' ?
+                Array(result[key], value) : isArray(result[key]) ?
+                append(result[key], value) : name.match(/\[\d*]$/) ?
+                [value] : value;
 
         result[key] = value;
       
