@@ -6,6 +6,9 @@
   var isObject = function(object) {
     return (typeof object == 'object' && object.length == undefined);
   }
+  var clone = function(object) {
+    return (isObject(object)) ? JSON.parse( JSON.stringify(object) ) : object;
+  }
   var append = function(array, value) {
     array.push(value);
     return array;
@@ -44,32 +47,30 @@
       } else {
         var childNode = dom2obj.call(tag);
         for (attr in childNode) { result[attr] = childNode[attr]; }
+      }
+    }
 
-        for (var key in result) {
-          if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
-            var keys = key.match(/\./) ? key.split(".") : key.split("[");
-            keys[1] = keys[1].replace("]", "");
-            
-            result[keys[0]] = result[keys[0]] || {};
-            result[keys[0]][keys[1]] = result[key];
-            
-            delete result[key];
-          }
-        }
+    for (var key in result) {
+      if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
+        var keys = key.match(/\./) ? key.split(".") : key.split("[");
+        keys[1] = keys[1].replace("]", "");
+        
+        result[keys[0]] = result[keys[0]] || {};
+        result[keys[0]][keys[1]] = result[key];
+
+        if (tag.children.length && tag.querySelector("[name]"))
+          delete result[key];
       }
     }
 
     return result;
   };
 
-  window.onload = function() {
-    if (typeof object == 'object')
-      obj2dom(object);
-    
+  //window.onload = function() {
     window.domo = window.domo || {};
     window.domo.body = window.domo.body || dom2obj.call(document.body);
     
     console.log( domo.body );
     console.log( JSON.stringify(domo.body) );
-  };
+  //};
 })();

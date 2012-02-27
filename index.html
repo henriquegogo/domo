@@ -4,8 +4,6 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <title>Domo - DOM Object</title>
-  <!-- <script src="jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script> -->
-  <script src="domo.native.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 
@@ -62,25 +60,30 @@
   </form>
 
   <hr>
+  
+  <fieldset name="people">
+    <h2>object.props</h2>
+    <label>Client ID</label>
+    <input type="text" name="client.id" value="2">
+    <br>
+    <label>Client Name</label>
+    <input type="text" name="client.name" value="Robert">
 
-  <h2>object.props</h2>
-  <label>Client ID</label>
-  <input type="text" name="client.id" value="2">
-  <br>
-  <label>Client Name</label>
-  <input type="text" name="client.name" value="Robert">
+    <hr>
 
-  <hr>
-
-  <h2>object[props]</h2>
-  <div>
-    <label>Product ID</label>
-    <input type="text" name="product[Id]" value="1">
-  </div>
-  <div>
-    <label>Product Name</label>
-    <input type="text" name="product[firstName]" value="Soccer shoes">
-  </div>
+    <h2>object[props]</h2>
+    <div>
+      <label>Product ID</label>
+      <input type="text" name="product[Identify]" value="1">
+    </div>
+    <div>
+      <div>
+        <label>Product Name</label>
+        <input type="text" name="product[firstName]" value="Soccer shoes">
+      </div>
+    </div>
+  </fieldset>
 
 </body>
+<script src="domo.native.js" type="text/javascript" charset="utf-8"></script>
 </html>
