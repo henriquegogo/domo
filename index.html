@@ -8,111 +8,52 @@
   <script src="domo.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+
+  <h2>Simple list</h2>
   <ul>
-    <li name="lista">Primeiro</li>
-    <li name="lista">Segundo</li>
-    <li name="lista">Terceiro</li>
+    <li name="list">First</li>
+    <li name="list">Second</li>
+    <li name="list">Third</li>
+  </ul>
+  
+  <hr>
+
+  <h2>Array forced list</h2>
+  <ul>
+    <li name="listWithOne[]">First array forced item</li>
   </ul>
 
-  <ol>
-    <li name="listaOrdenada[]">Item ordenado</li>
-    <li name="listaOrdenada[]">Item ordenado2</li>
-  </ol>
+  <hr>
 
-  <table>
-    <tbody>
-    <tr name="grid">
-      <td name="col">Col 01</td>
-      <td name="col">Col 02</td>
-    </tr>
-    <tr name="grid">
-      <td name="col">Col 1</td>
-      <td name="col">Col 2</td>
-    </tr>
-    <tr name="grid">
-      <td name="col">Col 21</td>
-      <td name="col">Col 22</td>
-    </tr>
-    </tbody>
-  </table>
-
-  <form name="form1">
-    <div class="field">
-      <input type="text" name="input" value="Name">
-      <input type="text" name="input" value="Name complete">
-    </div>
-    <textarea name="textarea">Multiline</textarea>
-    <input type="radio" name="radiobutton" value="104" checked>
-    <input type="radio" name="radiobutton" value="107">
-    <input type="checkbox" name="checkbox" checked>
-    <input type="checkbox" name="checkbox2">
-    <select name="combobox">
-      <option>Option 1</option>
-      <option>Option 2</option>
-    </select>
-  </form>
-
-  <form name="form2">
-    <input type="radio" name="radiobuttoneaaa" value="105" checked>
-    <input type="radio" name="radiobuttoneaaa" value="106">
-    <input type="text" name="inputmais" value="Nomenzarão">
-    <input type="text" name="inputmais" value="Nomenzarão 2">
-    <select name="combobox">
-      <option>Option 1</option>
-      <option selected>Option 2</option>
-    </select>
-    <div name="itensArray">
-      <input type="checkbox" name="checkextra" checked>
-      <input type="text" name="inputextra" value="Nomezinho">
-      <input type="text" name="inputextra" value="Nomezinho 2">
-      <input type="radio" name="radiobuttonsez" value="104" checked>
-      <input type="radio" name="radiobuttonsez" value="107">
-      <select name="combobox">
-        <option>Option 1</option>
-        <option>Option 2</option>
-      </select>
-    </div>
-    <div name="itensArray">
-      <input type="checkbox" name="checkextra">
-      <input type="text" name="inputextra" value="Outro nome">
-      <input type="text" name="inputextra" value="Outro nome 2">
-      <input type="radio" name="radiobuttonsez" value="104" checked>
-      <input type="radio" name="radiobuttonsez" value="107">
-      <select name="combobox">
-        <option>Option 1</option>
-        <option selected>Option 2</option>
-      </select>
-    </div>
-  </form>
-
-  <div id="twitter">
-    <ul>
-      <li name="tweets[]">
-        <p name="text"></p>
-        <div name="user">
-          <b name="name"></b>
-          <p name="url"></p>
-        </div>
-      </li>
-    </ul>
+  <div name="father">
+    <h2>Sons</h2>
+    <p name="son">Davidson</p>
+    <p name="daughter">Sarah</p>
   </div>
 
-  <textarea style="width: 1024px; height: 280px; border: none" readonly>
-This command:
-$.getJSON("http://twitter.com/status/user_timeline/henriquegogo.json?callback=?", function(tweets) { body.tweets = tweets });
+  <hr>
 
-Will populate this dom
-<ul>
-  <li name="tweets[]">
-    <p name="text"></p>
-    <div name="user">
-      <b name="name"></b>
-      <p name="url"></p>
+  <h2>Form</h2>
+  <form>
+    <div class="field">
+      <label>Name</label>
+      <input type="text" name="name" value="David">
     </div>
-  </li>
-</ul>
-
-Try!
-  </textarea>
+    <label>Description</label>
+    <textarea name="description">This is a awesome lib.</textarea>
+    <br>
+    <label>Sex</label>
+    <input type="radio" name="sex" value="Male" checked>
+    <input type="radio" name="sex" value="Female">
+    <br>
+    <label>Is human?</label>
+    <input type="checkbox" name="human" checked>
+    <br>
+    <label>Civil state</label>
+    <select name="civil_state">
+      <option>Single</option>
+      <option selected>Married</option>
+    </select>
+  </form>
 </body>
 </html>
