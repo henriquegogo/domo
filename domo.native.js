@@ -3,6 +3,9 @@
   var isArray = function(array) {
     return (typeof array == 'object' && array.length != undefined);
   }
+  var isObject = function(object) {
+    return (typeof object == 'object' && object.length == undefined);
+  }
   var append = function(array, value) {
     array.push(value);
     return array;
@@ -14,6 +17,23 @@
 
   // Object to DOM
   var obj2dom = function(object) {
+    var el = this.children;
+
+    for (var i = 0; i < el.length; i++) {
+      var tag = el[i];
+      var key = name = tag.getAttribute("name");
+      
+      if (key) {
+        key = key.replace(/\[\d*]$/, "");
+
+        (tag.children.length && tag.querySelector("[name]")) ?
+          obj2dom.call(tag, object[key]) :
+          console.log(key + ": " + object[key]);
+
+      } else {
+        obj2dom.call(tag, object);
+      }
+    }
   };
 
   // DOM to object
@@ -65,5 +85,7 @@
     
     console.log( domo.body );
     console.log( JSON.stringify(domo.body) );
+
+    obj2dom.call(document.body, {"list":["First","Second","Third"],"listWithOne":["One item list"],"father":{"son":"Davidson","daughter":"Sarah (the princess)"},"name":"David","description":"This is an awesome lib.","sex":"Male","human":true,"emails":false,"civil_state":"Married","people":{"client":{"id":"2","name":"Robert"},"product":{"Identify":"1","firstName":"Soccer shoes"}}});
   //};
 })();
