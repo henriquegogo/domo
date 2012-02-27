@@ -3,12 +3,6 @@
   var isArray = function(array) {
     return (typeof array == 'object' && array.length != undefined);
   }
-  var isObject = function(object) {
-    return (typeof object == 'object' && object.length == undefined);
-  }
-  var clone = function(object) {
-    return (isObject(object)) ? JSON.parse( JSON.stringify(object) ) : object;
-  }
   var append = function(array, value) {
     array.push(value);
     return array;
