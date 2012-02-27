@@ -3,7 +3,13 @@
   var isArray = function(array) {
     return (typeof array == 'object' && array.length != undefined);
   }
-  var append = function(array, value) { array.push(value); return array }
+  var isObject = function(object) {
+    return (typeof object == 'object' && object.length == undefined);
+  }
+  var append = function(array, value) {
+    array.push(value);
+    return array;
+  }
 
   // Object to DOM
   var obj2dom = function(object) {
@@ -34,23 +40,22 @@
                 [value] : value;
 
         result[key] = value;
-      
+  
       } else {
         var childNode = dom2obj.call(tag);
         for (attr in childNode) { result[attr] = childNode[attr]; }
-      }
-    }
 
-    for (var key in result) {
-      if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
-        var keys = key.match(/\./) ? key.split(".") : key.split("[");
-        keys[1] = keys[1].replace("]", "");
-        
-        result[keys[0]] = result[keys[0]] || {};
-        result[keys[0]][keys[1]] = result[key];
-        
-        delete result[key];
-      
+        for (var key in result) {
+          if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
+            var keys = key.match(/\./) ? key.split(".") : key.split("[");
+            keys[1] = keys[1].replace("]", "");
+            
+            result[keys[0]] = result[keys[0]] || {};
+            result[keys[0]][keys[1]] = result[key];
+            
+            delete result[key];
+          }
+        }
       }
     }
 
