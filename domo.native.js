@@ -26,9 +26,17 @@
       if (key) {
         key = key.replace(/\[\d*]$/, "");
 
-        (tag.children.length && tag.querySelector("[name]")) ?
-          obj2dom.call(tag, object[key]) :
+        if (tag.children.length && tag.querySelector("[name]"))
+          obj2dom.call(tag, object[key]);
+        
+        else {
+          if (tag.type == 'checkbox' || tag.type == 'radio')
+            tag.removeAttribute('checked');
+          else if (tag.querySelector("[selected]"))
+            tag.querySelector("[selected]").removeAttribute('selected');
+
           console.log(key + ": " + object[key]);
+        }
 
       } else {
         obj2dom.call(tag, object);
