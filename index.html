@@ -4,8 +4,8 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
   <title>Domo - DOM Object</title>
-  <script src="jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script>
-  <script src="domo.js" type="text/javascript" charset="utf-8"></script>
+  <!-- <script src="jquery-1.7.1.min.js" type="text/javascript" charset="utf-8"></script> -->
+  <script src="domo.native.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 
@@ -20,15 +20,15 @@
 
   <h2>Array forced list</h2>
   <ul>
-    <li name="listWithOne[]">First array forced item</li>
+    <li name="listWithOne[]">One item list</li>
   </ul>
 
   <hr>
 
   <div name="father">
     <h2>Sons</h2>
-    <p name="son">Davidson</p>
-    <p name="daughter">Sarah</p>
+    <p>The super <b name="son">Davidson</b></p>
+    <p name="daughter">Sarah <i>(the princess)</i></p>
   </div>
 
   <hr>
@@ -40,19 +40,24 @@
       <input type="text" name="name" value="David">
     </div>
     <label>Description</label>
-    <textarea name="description">This is a awesome lib.</textarea>
+    <textarea name="description">This is an awesome lib.</textarea>
     <br>
     <label>Sex</label>
-    <input type="radio" name="sex" value="Male" checked>
-    <input type="radio" name="sex" value="Female">
+    <input type="radio" name="sex" value="Male"> Male
+    <input type="radio" name="sex" value="Female" checked> Female
+    <input type="radio" name="sex" value="Dont know"> Dont know
     <br>
     <label>Is human?</label>
     <input type="checkbox" name="human" checked>
+    <br>
+    <label>Want to receive emails?</label>
+    <input type="checkbox" name="emails">
     <br>
     <label>Civil state</label>
     <select name="civil_state">
       <option>Single</option>
       <option selected>Married</option>
+      <option>I dont know</option>
     </select>
   </form>
 </body>
