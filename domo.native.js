@@ -13,14 +13,18 @@
     array.push(value);
     return array;
   }
+  var mergeObject = function(obj1, obj2) {
+    for (attr in obj2) obj1[attr] = obj2[attr];
+    return obj1;
+  }
 
   // Object to DOM
   var obj2dom = function(object) {
   };
 
   // DOM to object
-  var dom2obj = function() {
-    var result = {};
+  var dom2obj = function(oldResult) {
+    var result = oldResult || {};
     var el = this.children;
 
     for (var i = 0; i < el.length; i++) {
@@ -42,24 +46,19 @@
                 append(result[key], value) : name.match(/\[\d*]$/) ?
                 [value] : value;
 
-        result[key] = value;
+        if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
+          var keys = key.match(/\./) ? key.split(".") : key.split("[");
+          keys[1] = keys[1].replace("]", "");
+          
+          result[keys[0]] = result[keys[0]] || {};
+          result[keys[0]][keys[1]] = value;
+          
+        } else
+          result[key] = value;
   
       } else {
-        var childNode = dom2obj.call(tag);
-        for (attr in childNode) { result[attr] = childNode[attr]; }
-      }
-    }
-
-    for (var key in result) {
-      if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
-        var keys = key.match(/\./) ? key.split(".") : key.split("[");
-        keys[1] = keys[1].replace("]", "");
-        
-        result[keys[0]] = result[keys[0]] || {};
-        result[keys[0]][keys[1]] = result[key];
-
-        if (tag.children.length && tag.querySelector("[name]"))
-          delete result[key];
+        var childNode = dom2obj.call(tag, result);
+        result = mergeObject(result, childNode);
       }
     }
 
