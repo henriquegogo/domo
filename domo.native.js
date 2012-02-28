@@ -31,12 +31,12 @@
 
     var removeSiblings = function(tag, name) {
       var siblings = tag.parentElement.querySelectorAll("[name='"+name+"']");
-      for (var i in siblings)
-        if (typeof siblings[i] == 'object' && i > 0)
-          tag.parentElement.removeChild(siblings[i]);
+      for (var i = 1; i < siblings.length; i++)
+        tag.parentElement.removeChild(siblings[i]);
     }
     
     var applyValues = function(tag, object, key) {
+      key = key.toLocaleString();
       key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, key) :
       isArray(object[key]) ? doArray(tag, object[key], name) :
       tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
@@ -50,17 +50,20 @@
 
     var doObject = function(tag, object, key) {
       var keys = key.match(/\./) ? key.split(".") : key.split("[");
+      console.log(keys);
       keys[1] = keys[1].replace("]", "");
+      console.log(keys);
       applyValues(tag, object[keys[0]], keys[1]);
     }
 
     var doArray = function(tag, arr, name) {
       if (tag == tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
         removeSiblings(tag, name);
-        
-        for (var i = 0; i < arr.length - 1; i++) {
+        applyValues(tag, arr, 0);
+
+        for (var i = 1; i < arr.length; i++) {
           var clone = tag.cloneNode();
-          applyValues(clone, arr[i], key);
+          applyValues(clone, arr, i);
           tag.parentElement.appendChild(clone);
         }
       }
@@ -137,9 +140,6 @@
   var domo = function() {
     window.domo = window.domo || {};
     window.domo.body = dom2obj.call(document.body);
-    window.domo.sync = JSON.stringify(window.domo.body);
-    window.domo.onchange = window.domo.onchange || function() {};
-    window.domo.onchange();
   };
 
   var verifyChanges = function() {
