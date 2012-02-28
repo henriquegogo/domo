@@ -20,11 +20,27 @@
 
   // Object to DOM
   var obj2dom = function(object) {
+    var uncheckAll = function(tag) {
+      if (tag.type == 'checkbox' || tag.type == 'radio')
+        tag.removeAttribute('checked');
+      else if (tag.querySelector("[selected]"))
+        tag.querySelector("[selected]").removeAttribute('selected');
+    };
+
     var el = this.children;
 
-    var applyValues = function(tag, object, prop) {
-      console.log(prop + ": " + object[prop]);
-    }
+    var applyValues = function(tag, object, key, name) {
+      //isObject(object[key]) ? doObject(tag, object[key], key) :
+      //isArray(object[key]) && tag.type == 'radio' && tag.type == 'file' ? doArray(tag, object[key]) :
+      tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
+      //tag.tagName == 'SELECT' ? tag.querySelector("option[value='" + object[key] + "'], option:contains('$" + object[key] + "^')").setAttribute('selected', 'true') :
+      tag.type == 'checkbox' ? tag.setAttribute('checked', object[key]) :
+      //tag.type == 'radio' ? tag.filter("[value=" + object[prop] + "]").setAttribute("checked", true) :
+      tag.type == 'file' ? false :
+      //tag.type == 'input' ? tag.setAttribute('value', object[key]) : tag.innerHTML = object[key];
+
+      console.log(name + ": " + object[key]);
+    };
 
     for (var i = 0; i < el.length; i++) {
       var tag = el[i];
@@ -37,12 +53,8 @@
           obj2dom.call(tag, object[key]);
         
         else {
-          if (tag.type == 'checkbox' || tag.type == 'radio')
-            tag.removeAttribute('checked');
-          else if (tag.querySelector("[selected]"))
-            tag.querySelector("[selected]").removeAttribute('selected');
-
-          applyValues(tag, object, key);
+          uncheckAll(tag);
+          applyValues(tag, object, key, name);
         }
 
       } else {
@@ -94,19 +106,20 @@
     return result;
   };
 
-  var verifyChanges = function() {
-    if (JSON.stringify(window.domo.body) != window.domo.sync) {
-      obj2dom.call(document.body, window.domo.body);
-      domo();
-    }
-  };
-
+  // Init and bootstrap
   var domo = function() {
     window.domo = window.domo || {};
     window.domo.body = window.domo.body || dom2obj.call(document.body);
     window.domo.sync = JSON.stringify(window.domo.body);
     window.domo.onchange = window.domo.onchange || function() {};
     window.domo.onchange();
+  };
+
+  var verifyChanges = function() {
+    if (JSON.stringify(window.domo.body) != window.domo.sync) {
+      obj2dom.call(document.body, window.domo.body);
+      domo();
+    }
   };
 
   //window.onload = function() {
