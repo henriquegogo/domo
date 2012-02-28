@@ -14,6 +14,9 @@
     for (attr in obj2) obj1[attr] = obj2[attr];
     return obj1;
   }
+  var outerHTML = function(el) {
+    return new XMLSerializer().serializeToString(el);
+  }
 
   // Object to DOM
   var obj2dom = function(object) {
