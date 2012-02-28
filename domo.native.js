@@ -28,10 +28,17 @@
       else if (tag.querySelector("[selected]"))
         tag.querySelector("[selected]").removeAttribute('selected');
     };
+
+    var removeSiblings = function(tag, name) {
+      var siblings = tag.parentElement.querySelectorAll("[name='"+name+"']");
+      for (var i in siblings)
+        if (typeof siblings[i] == 'object' && i > 0)
+          tag.parentElement.removeChild(siblings[i]);
+    }
     
     var applyValues = function(tag, object, key) {
       key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, key) :
-      //isArray(object[key]) && tag.type == 'radio' && tag.type == 'file' ? doArray(tag, object[key]) :
+      isArray(object[key]) ? doArray(tag, object[key], name) :
       tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
       tag.tagName == 'SELECT' ? tag.value = object[key] :
       tag.type == 'checkbox' && object[key] ? tag.setAttribute('checked', true) :
@@ -47,17 +54,19 @@
       applyValues(tag, object[keys[0]], keys[1]);
     }
 
-    var doArray = function(tag, arr) {
-      var container = $("<div />");
-      
-      for (var i = 0; i < arr.length; i++) {
-        var clone = tag.eq(0).clone();
-        applyValues(clone, arr, i)
-        container.append(outerHTML(clone));
+    var doArray = function(tag, arr, name) {
+      if (tag == tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
+        removeSiblings(tag, name);
+        
+        for (var i = 0; i < arr.length - 1; i++) {
+          var clone = tag.cloneNode();
+          applyValues(clone, arr[i], key);
+          tag.parentElement.appendChild(clone);
+        }
       }
       
-      if (tag.length > 1) tag.replaceWith(tag.eq(0));
-      tag.replaceWith(container.html());
+      //tag.innerHTML = object[key];
+      //applyValues(tag, object[key], key);
     }
 
     for (var i = 0; i < el.length; i++) {
@@ -146,6 +155,6 @@
     console.log( JSON.stringify(window.domo.body) );
     console.log("==================================");
 
-    obj2dom.call(document.body, {"list":["First changed","Second and last"],"listWithOne":["One more item list", "Last item on this list"],"father":{"son":"Davidson II","daughter":"Sarah (the queen)"},"name":"Martha Smith","description":"This is an awesome lib. Yeah!","sex":"Female","human":false,"emails":true,"civil_state":"Single","city":"FOR","people":{"client":{"id":"2","name":"Robertson"},"product":{"Identify":"1","firstName":"Soccer shoes and guitars"}}});
+    obj2dom.call(document.body, {"list":["First changed","Second and last"],"listWithOne":["One more item list", "One more time", "Last item on this list"],"father":{"son":"Davidson II","daughter":"Sarah (the queen)"},"name":"Martha Smith","description":"This is an awesome lib. Yeah!","sex":"Female","human":false,"emails":true,"civil_state":"Single","city":"FOR","people":{"client":{"id":"2","name":"Robertson"},"product":{"Identify":"1","firstName":"Soccer shoes and guitars"}}});
   //};
 //})();
