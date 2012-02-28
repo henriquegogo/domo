@@ -20,15 +20,15 @@
 
   // Object to DOM
   var obj2dom = function(object) {
+    var el = this.children;
+
     var uncheck = function(tag) {
       if (tag.type == 'checkbox' || tag.type == 'radio')
         tag.removeAttribute('checked');
       else if (tag.querySelector("[selected]"))
         tag.querySelector("[selected]").removeAttribute('selected');
     };
-
-    var el = this.children;
-
+    
     var applyValues = function(tag, object, key) {
       key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, key) :
       //isArray(object[key]) && tag.type == 'radio' && tag.type == 'file' ? doArray(tag, object[key]) :
