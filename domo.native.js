@@ -50,9 +50,7 @@
 
     var doObject = function(tag, object, key) {
       var keys = key.match(/\./) ? key.split(".") : key.split("[");
-      console.log(keys);
       keys[1] = keys[1].replace("]", "");
-      console.log(keys);
       applyValues(tag, object[keys[0]], keys[1]);
     }
 
