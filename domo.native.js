@@ -30,26 +30,21 @@
     var el = this.children;
 
     var applyValues = function(tag, object, key, name) {
-      //isObject(object[key]) ? doObject(tag, object[key], key) :
+      key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, name) :
       //isArray(object[key]) && tag.type == 'radio' && tag.type == 'file' ? doArray(tag, object[key]) :
       tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
       tag.tagName == 'SELECT' ? tag.value = object[key] :
       tag.type == 'checkbox' && object[key] ? tag.setAttribute('checked', true) :
       tag.type == 'radio' && tag.value == object[key] ? tag.setAttribute("checked", true) :
       tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
-      tag.tagName == 'INPUT' ? tag.value = object[key] : tag.innerHTML = object[key];
-
-      console.log(name + ": " + object[key]);
+      tag.tagName == 'INPUT' ? tag.value = object[key] :
+      tag.innerHTML = object[key];
     };
 
-    var doObject = function(tag, object, obj_name) {
-      for (var key in object) {
-        var childNode = ( tag.querySelector("[name='" + obj_name + "." + key + "']").length ) ?
-          tag.querySelector("[name='" + obj_name + "." + key + "']") :
-          tag.querySelector("[name='" + obj_name + "." + key + "[]']");
-        
-        applyValues(childNode, object, key)
-      }
+    var doObject = function(tag, object, name) {
+      var keys = name.match(/\./) ? name.split(".") : name.split("[");
+      keys[1] = keys[1].replace("]", "");
+      applyValues(tag, object[keys[0]], keys[1]);
     }
 
     var doArray = function(tag, arr) {
@@ -151,6 +146,6 @@
     console.log( JSON.stringify(window.domo.body) );
     console.log("==================================");
 
-    obj2dom.call(document.body, {"list":["First changed","Second changed too","Third almost changed"],"listWithOne":["One more item list"],"father":{"son":"Davidson II","daughter":"Sarah (the queen)"},"name":"Martha Smith","description":"This is an awesome lib. Yeah!","sex":"Female","human":false,"emails":true,"civil_state":"Single","city":"FOR","people":{"client":{"id":"2","name":"Robertson"},"product":{"Identify":"1","firstName":"Soccer shoes and guitars"}}});
+    obj2dom.call(document.body, {"list":["First changed","Second and last"],"listWithOne":["One more item list", "Last item on this list"],"father":{"son":"Davidson II","daughter":"Sarah (the queen)"},"name":"Martha Smith","description":"This is an awesome lib. Yeah!","sex":"Female","human":false,"emails":true,"civil_state":"Single","city":"FOR","people":{"client":{"id":"2","name":"Robertson"},"product":{"Identify":"1","firstName":"Soccer shoes and guitars"}}});
   //};
 //})();
