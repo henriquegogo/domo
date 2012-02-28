@@ -29,8 +29,8 @@
 
     var el = this.children;
 
-    var applyValues = function(tag, object, key, name) {
-      key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, name) :
+    var applyValues = function(tag, object, key) {
+      key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, key) :
       //isArray(object[key]) && tag.type == 'radio' && tag.type == 'file' ? doArray(tag, object[key]) :
       tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
       tag.tagName == 'SELECT' ? tag.value = object[key] :
@@ -41,8 +41,8 @@
       tag.innerHTML = object[key];
     };
 
-    var doObject = function(tag, object, name) {
-      var keys = name.match(/\./) ? name.split(".") : name.split("[");
+    var doObject = function(tag, object, key) {
+      var keys = key.match(/\./) ? key.split(".") : key.split("[");
       keys[1] = keys[1].replace("]", "");
       applyValues(tag, object[keys[0]], keys[1]);
     }
@@ -72,7 +72,7 @@
         
         else {
           uncheck(tag);
-          applyValues(tag, object, key, name);
+          applyValues(tag, object, key);
         }
 
       } else {
