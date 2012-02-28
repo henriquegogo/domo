@@ -22,6 +22,10 @@
   var obj2dom = function(object) {
     var el = this.children;
 
+    var applyValues = function(tag, object, prop) {
+      console.log(prop + ": " + object[prop]);
+    }
+
     for (var i = 0; i < el.length; i++) {
       var tag = el[i];
       var key = name = tag.getAttribute("name");
@@ -38,7 +42,7 @@
           else if (tag.querySelector("[selected]"))
             tag.querySelector("[selected]").removeAttribute('selected');
 
-          console.log(key + ": " + object[key]);
+          applyValues(tag, object, key);
         }
 
       } else {
