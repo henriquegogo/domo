@@ -94,12 +94,27 @@
     return result;
   };
 
-  //window.onload = function() {
+  var verifyChanges = function() {
+    if (JSON.stringify(window.domo.body) != window.domo.sync) {
+      obj2dom.call(document.body, window.domo.body);
+      domo();
+    }
+  };
+
+  var domo = function() {
     window.domo = window.domo || {};
     window.domo.body = window.domo.body || dom2obj.call(document.body);
+    window.domo.sync = JSON.stringify(window.domo.body);
+    window.domo.onchange = window.domo.onchange || function() {};
+    window.domo.onchange();
+  };
+
+  //window.onload = function() {
+    domo();
     
-    console.log( domo.body );
-    console.log( JSON.stringify(domo.body) );
+    console.log( window.domo.body );
+    console.log( JSON.stringify(window.domo.body) );
+    console.log("==================================");
 
     obj2dom.call(document.body, {"list":["First","Second","Third"],"listWithOne":["One item list"],"father":{"son":"Davidson","daughter":"Sarah (the princess)"},"name":"David","description":"This is an awesome lib.","sex":"Male","human":true,"emails":false,"civil_state":"Married","people":{"client":{"id":"2","name":"Robert"},"product":{"Identify":"1","firstName":"Soccer shoes"}}});
   //};
