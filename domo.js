@@ -42,7 +42,7 @@
       tag.tagName == 'SELECT' ? tag.value = object[key] :
       tag.type == 'checkbox' && object[key] ? tag.setAttribute('checked', true) :
       tag.type == 'radio' && tag.value == object[key] ? tag.setAttribute("checked", true) :
-      tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
+      tag.tagName == 'BUTTON' || tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
       tag.tagName == 'INPUT' ? tag.value = object[key] :
       tag.innerHTML = object[key];
     };
