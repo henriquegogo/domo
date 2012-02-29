@@ -28,7 +28,7 @@
 
     var removeSiblings = function(tag, name) {
       var siblings = tag.parentElement.querySelectorAll("[name='"+name+"']");
-      if (siblings.length)
+      if (siblings.length > 1 && tag.parentElement)
         for (var i = 1; i < siblings.length; i++)
           tag.parentElement.removeChild(siblings[i]);
     }
