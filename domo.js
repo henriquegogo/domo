@@ -1,4 +1,4 @@
-//(function () {
+(function () {
   // Some helpers
   var isArray = function(array) {
     return (typeof array == 'object' && array.length != undefined);
@@ -28,9 +28,10 @@
 
     var removeSiblings = function(tag, name) {
       var siblings = tag.parentElement.querySelectorAll("[name='"+name+"']");
-      if (siblings.length > 1 && tag.parentElement)
-        for (var i = 1; i < siblings.length; i++)
-          tag.parentElement.removeChild(siblings[i]);
+      for (var i = 1; i < siblings.length; i++) {
+        try { tag.parentElement.removeChild(siblings[i]); }
+        catch(err) { }
+      }
     }
     
     var applyValues = function(tag, object, key) {
@@ -53,7 +54,7 @@
     }
 
     var doArray = function(tag, arr, name) {
-      if (tag == tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
+      if (tag === tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
         removeSiblings(tag, name);
         applyValues(tag, arr, 0);
 
@@ -154,4 +155,4 @@
 
     setInterval(verifyChanges, 100);
   //};
-//})();
+})();
