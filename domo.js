@@ -17,7 +17,8 @@
 
   // Object to DOM
   obj2dom = function(object) {
-    var el = this.children;
+    var container = (this == window) ? document.body : this;
+    var el = container.children;
 
     var uncheck = function(tag) {
       if (tag.type == 'checkbox' || tag.type == 'radio')
@@ -90,7 +91,8 @@
   // DOM to object
   dom2obj = function(oldResult) {
     var result = oldResult || {};
-    var el = this.children;
+    var container = (this == window) ? document.body : this;
+    var el = container.children;
 
     for (var i = 0; i < el.length; i++) {
       var tag = el[i];
