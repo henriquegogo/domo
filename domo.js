@@ -16,7 +16,7 @@
   }
 
   // Object to DOM
-  var obj2dom = function(object) {
+  obj2dom = function(object) {
     var el = this.children;
 
     var uncheck = function(tag) {
@@ -88,7 +88,7 @@
   };
 
   // DOM to object
-  var dom2obj = function(oldResult) {
+  dom2obj = function(oldResult) {
     var result = oldResult || {};
     var el = this.children;
 
