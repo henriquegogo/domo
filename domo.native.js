@@ -14,9 +14,6 @@
     for (attr in obj2) obj1[attr] = obj2[attr];
     return obj1;
   }
-  var outerHTML = function(el) {
-    return new XMLSerializer().serializeToString(el);
-  }
 
   // Object to DOM
   var obj2dom = function(object) {
@@ -60,14 +57,11 @@
         applyValues(tag, arr, 0);
 
         for (var i = 1; i < arr.length; i++) {
-          var clone = tag.cloneNode();
+          var clone = tag.cloneNode(true);
           applyValues(clone, arr, i);
           tag.parentElement.appendChild(clone);
         }
       }
-      
-      //tag.innerHTML = object[key];
-      //applyValues(tag, object[key], key);
     }
 
     for (var i = 0; i < el.length; i++) {
@@ -99,7 +93,7 @@
     for (var i = 0; i < el.length; i++) {
       var tag = el[i];
       var key = name = tag.getAttribute("name");
-      
+
       if (key) {
         key = key.replace(/\[\d*]$/, "");
 
@@ -111,9 +105,9 @@
                 value;
 
         value = result[key] && !isArray(result[key]) && tag.type != 'radio' ?
-                Array(result[key], value) : isArray(result[key]) ?
-                append(result[key], value) : name.match(/\[\d*]$/) ?
-                [value] : value;
+                Array(result[key], value) :
+                isArray(result[key]) ? append(result[key], value) :
+                name.match(/\[\d*]$/) ? [value] : value;
 
         if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
           var keys = key.match(/\./) ? key.split(".") : key.split("[");
@@ -137,22 +131,21 @@
   // Init and bootstrap
   var domo = function() {
     window.domo = window.domo || {};
-    window.domo.body = dom2obj.call(document.body);
+    window.domo.body = window.domo.body || dom2obj.call(document.body);
+    window.domo.sync = JSON.stringify(window.domo.body);
+    window.domo.onchange = window.domo.onchange || function() {};
+    window.domo.onchange();
   };
 
   var verifyChanges = function() {
     if (JSON.stringify(window.domo.body) != window.domo.sync) {
       obj2dom.call(document.body, window.domo.body);
+      domo();
     }
   };
 
   //window.onload = function() {
     domo();
-    
-    console.log( window.domo.body );
-    console.log( JSON.stringify(window.domo.body) );
-    console.log("==================================");
-
-    obj2dom.call(document.body, {"list":["First changed","Second and last"],"listWithOne":["One more item list", "One more time", "Last item on this list"],"father":{"son":"Davidson II","daughter":"Sarah (the queen)"},"name":"Martha Smith","description":"This is an awesome lib. Yeah!","sex":"Female","human":false,"emails":true,"civil_state":"Single","city":"FOR","people":{"client":{"id":"2","name":"Robertson"},"product":{"Identify":"1","firstName":"Soccer shoes and guitars"}}});
+    setInterval(verifyChanges, 100);
   //};
 //})();
