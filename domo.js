@@ -1,124 +1,156 @@
-(function ($) {
-  $.fn.domo = function(object) {
-    // ## Object to DOM ##
-    if (typeof object == 'object') {
-      $('[type=checkbox], [type=radio]', this).removeAttr('checked');
-      $('option', this).removeAttr('selected');
+//(function () {
+  // Some helpers
+  var isArray = function(array) {
+    return (typeof array == 'object' && array.length != undefined);
+  }
+  var isObject = function(object) {
+    return (typeof object == 'object' && object.length == undefined);
+  }
+  var append = function(array, value) {
+    array.push(value);
+    return array;
+  }
+  var mergeObject = function(obj1, obj2) {
+    for (attr in obj2) obj1[attr] = obj2[attr];
+    return obj1;
+  }
 
-      var stringDom = function(who) { return $("<div />").html(who).html() };
+  // Object to DOM
+  var obj2dom = function(object) {
+    var el = this.children;
 
-      var applyValues = function(who, object, prop) {
-        $.isPlainObject(object[prop]) ? doObject(who, object[prop], prop) :
-        $.isArray(object[prop]) && !who.is('[type=radio]') && !who.is('[type=file]') ? doArray(who, object[prop]) :
-        who.is('img') ? who.attr('src', object[prop]) :
-        who.is('select') ? who.find("option[value='" + object[prop] + "'], option:contains('$" + object[prop] + "^')").attr('selected', 'true') :
-        who.is('[type=checkbox]') ? who.attr('checked', object[prop]) :
-        who.is('[type=radio]') ? who.filter("[value=" + object[prop] + "]").attr("checked", true) :
-        who.is('[type=file]') ? false :
-        who.is('input') ? who.attr('value', object[prop]) : who.html(object[prop]);
-      }
+    var uncheck = function(tag) {
+      if (tag.type == 'checkbox' || tag.type == 'radio')
+        tag.removeAttribute('checked');
+      else if (tag.querySelector("[selected]"))
+        tag.querySelector("[selected]").removeAttribute('selected');
+    };
 
-      var doObject = function(me, object, obj_name) {
-        if (me.length) me.domo(object);
-        else {
-          for (var prop in object) {
-            var who = ( $("[name='" + obj_name + "." + prop + "']").length ) ?
-              $("[name='" + obj_name + "." + prop + "']") :
-              $("[name='" + obj_name + "." + prop + "[]']");
-            
-            applyValues(who, object, prop)
-          }
-        }
-      }
-
-      var doArray = function(who, arr) {
-        var container = $("<div />");
-        
-        for (var i = 0; i < arr.length; i++) {
-          var clone = who.eq(0).clone();
-          applyValues(clone, arr, i)
-          container.append(stringDom(clone));
-        }
-        
-        if (who.length > 1) who.replaceWith(who.eq(0));
-        who.replaceWith(container.html());
-      }
-
-      for (var prop in object) {
-        var who = ( $("[name='" + prop + "']", this).length ) ? $("[name='" + prop + "']", this) : $("[name='" + prop + "[]']", this);
-        applyValues(who, object, prop)
-      }
-
-      return this;
-
-    } else {
-      // ## DOM to object ##
-      var append = function(array, value) { array.push(value); return array }
-      var result = {};
-      
-      $(this).children().each(function() {
-        var key = $(this).attr("name");
-
-        if (key) {
-          key = key.replace(/\[]$/, "");
-          var value = $(this).children().size() > 0 ? $(this).domo() :
-                      $(this).val() ? $(this).val() : $(this).text();
-
-          value = $(this).is('select') ? $(this).val() :
-                  $(this).is('[type=checkbox]') ? $(this).prop('checked') :
-                  $(this).is('[type=radio]') ? $("[name="+ $(this).attr('name') +"]:checked").val() :
-                  value;
-          
-          value = (result[key] && !$.isArray(result[key]) && !$(this).is('[type=radio]') || $(this).attr("name").match(/[]$/) ) ?
-                  Array(result[key], value) : $.isArray(result[key]) ?
-                  append(result[key], value) : value;
-
-          result[key] = value;
-
-        } else {
-          $.extend(result, $(this).domo());
-        
-        }
-      });
-
-      for (var key in result) {
-        if (key.match(/\./)) {
-          var keys = key.split(".");
-          
-          result[keys[0]] = result[keys[0]] || {};
-          result[keys[0]][keys[1]] = result[key];
-          
-          delete result[key];
-        }
-      }
-
-      return result;
+    var removeSiblings = function(tag, name) {
+      var siblings = tag.parentElement.querySelectorAll("[name='"+name+"']");
+      for (var i = 1; i < siblings.length; i++)
+        tag.parentElement.removeChild(siblings[i]);
     }
-  }
+    
+    var applyValues = function(tag, object, key) {
+      key = key.toLocaleString();
+      key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, key) :
+      isArray(object[key]) ? doArray(tag, object[key], name) :
+      tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
+      tag.tagName == 'SELECT' ? tag.value = object[key] :
+      tag.type == 'checkbox' && object[key] ? tag.setAttribute('checked', true) :
+      tag.type == 'radio' && tag.value == object[key] ? tag.setAttribute("checked", true) :
+      tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
+      tag.tagName == 'INPUT' ? tag.value = object[key] :
+      tag.innerHTML = object[key];
+    };
 
-  $.domo = function() {
-    window.domo = window.domo || {};
-    window.domo.body = window.domo.body || $("body").domo();
-    window.domo.sync = JSON.stringify(window.domo.body);
-    window.domo.onchange = window.domo.onchange || function() {};
-    window.domo.onchange();
+    var doObject = function(tag, object, key) {
+      var keys = key.match(/\./) ? key.split(".") : key.split("[");
+      keys[1] = keys[1].replace("]", "");
+      applyValues(tag, object[keys[0]], keys[1]);
+    }
 
-    $(document)
-      .undelegate("[name]", "blur.domo")
-      .delegate("[name]", "blur.domo", function() {
-        window.domo.body = $("body").domo();
-    });
-  }
+    var doArray = function(tag, arr, name) {
+      if (tag == tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
+        removeSiblings(tag, name);
+        applyValues(tag, arr, 0);
 
-  var verifyChanges = function() {
-    if (JSON.stringify(window.domo.body) != window.domo.sync) {
-      $("body").domo( window.domo.body );
-      $.domo();
+        for (var i = 1; i < arr.length; i++) {
+          var clone = tag.cloneNode(true);
+          applyValues(clone, arr, i);
+          tag.parentElement.appendChild(clone);
+        }
+      }
+    }
+
+    for (var i = 0; i < el.length; i++) {
+      var tag = el[i];
+      var key = name = tag.getAttribute("name");
+      
+      if (key) {
+        key = key.replace(/\[\d*]$/, "");
+
+        if (tag.children.length && tag.querySelector("[name]"))
+          obj2dom.call(tag, object[key]);
+        
+        else {
+          uncheck(tag);
+          applyValues(tag, object, key);
+        }
+
+      } else {
+        obj2dom.call(tag, object);
+      }
     }
   };
 
-  $(document).ready(function() {
-    $.domo();
+  // DOM to object
+  var dom2obj = function(oldResult) {
+    var result = oldResult || {};
+    var el = this.children;
+
+    for (var i = 0; i < el.length; i++) {
+      var tag = el[i];
+      var key = name = tag.getAttribute("name");
+
+      if (key) {
+        key = key.replace(/\[\d*]$/, "");
+
+        var value = tag.children.length && tag.querySelector("[name]") ?
+                    dom2obj.call(tag) : tag.value || tag.textContent;
+
+        value = (tag.type == 'checkbox') ? tag.checked :
+                (tag.type == 'radio' && !tag.checked) ? result[key] :
+                value;
+
+        value = result[key] && !isArray(result[key]) && tag.type != 'radio' ?
+                Array(result[key], value) :
+                isArray(result[key]) ? append(result[key], value) :
+                name.match(/\[\d*]$/) ? [value] : value;
+
+        if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
+          var keys = key.match(/\./) ? key.split(".") : key.split("[");
+          keys[1] = keys[1].replace("]", "");
+          
+          result[keys[0]] = result[keys[0]] || {};
+          result[keys[0]][keys[1]] = value;
+          
+        } else
+          result[key] = value;
+  
+      } else {
+        var childNode = dom2obj.call(tag, result);
+        result = mergeObject(result, childNode);
+      }
+    }
+
+    return result;
+  };
+
+  // Init and bootstrap
+  var domo = function() {
+    window.domo = window.domo || {};
+    window.domo.body = window.domo.body || dom2obj.call(document.body);
+    window.domo.sync = JSON.stringify(window.domo.body);
+    window.domo.onchange = window.domo.onchange || function() {};
+    window.domo.onchange();
+  };
+
+  var verifyChanges = function() {
+    if (JSON.stringify(window.domo.body) != window.domo.sync) {
+      obj2dom.call(document.body, window.domo.body);
+      domo();
+    }
+  };
+
+  //window.onload = function() {
+    domo();
+
+    document.addEventListener("change", function() {
+      window.domo.body = dom2obj.call(document.body);
+    });
+
     setInterval(verifyChanges, 100);
-  });
-})(jQuery);
+  //};
+//})();
