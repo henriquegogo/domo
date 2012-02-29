@@ -4,6 +4,7 @@ Simple change/access window.domo.body object
 ## Loading script
     <script src="https://raw.github.com/henriquegogo/domo/master/domo.js" type="text/javascript" charset="utf-8"></script>
 or
+
     var scriptDomo = document.createElement("script");
     scriptDomo.src = "https://raw.github.com/henriquegogo/domo/master/domo.js";
     document.body.appendChild(scriptDomo);
