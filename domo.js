@@ -147,7 +147,7 @@
       domo();
   };
 
-  window.onload = function() {
+  document.addEventListener("DOMContentLoaded", function() {
     domo();
 
     document.addEventListener("change", function() {
@@ -155,5 +155,5 @@
     });
 
     setInterval(verifyChanges, 100);
-  };
+  });
 })();
