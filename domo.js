@@ -135,26 +135,25 @@
   // Init and bootstrap
   var domo = function() {
     window.domo = window.domo || {};
-    window.domo.body = window.domo.body || dom2obj.call(document.body);
+    window.domo.body = window.domo.body || dom2obj();
     window.domo.sync = JSON.stringify(window.domo.body);
     window.domo.onchange = window.domo.onchange || function() {};
     window.domo.onchange();
+    obj2dom(window.domo.body);
   };
 
   var verifyChanges = function() {
-    if (JSON.stringify(window.domo.body) != window.domo.sync) {
-      obj2dom.call(document.body, window.domo.body);
+    if (JSON.stringify(window.domo.body) != window.domo.sync)
       domo();
-    }
   };
 
-  //window.onload = function() {
+  window.onload = function() {
     domo();
 
     document.addEventListener("change", function() {
-      window.domo.body = dom2obj.call(document.body);
+      window.domo.body = dom2obj();
     });
 
     setInterval(verifyChanges, 100);
-  //};
+  };
 })();
