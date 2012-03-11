@@ -104,7 +104,8 @@
         var value = tag.children.length && tag.querySelector("[name]") ?
                     dom2obj.call(tag) : tag.value || tag.textContent;
 
-        value = (tag.type == 'checkbox') ? tag.checked :
+        value = (tag.tagName == 'SELECT' && !tag.value) ? "" :
+                (tag.type == 'checkbox') ? tag.checked :
                 (tag.type == 'radio' && !tag.checked) ? result[key] :
                 value;
 
