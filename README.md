@@ -8,6 +8,7 @@ or
     var scriptDomo = document.createElement("script");
     scriptDomo.src = "https://raw.github.com/henriquegogo/domo/master/domo.js";
     document.body.appendChild(scriptDomo);
+    
     setTimeout(function() {
       var DOMContentLoaded_event = document.createEvent("Event");
       DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
