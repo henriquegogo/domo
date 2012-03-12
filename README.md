@@ -8,6 +8,11 @@ or
     var scriptDomo = document.createElement("script");
     scriptDomo.src = "https://raw.github.com/henriquegogo/domo/master/domo.js";
     document.body.appendChild(scriptDomo);
+    setTimeout(function() {
+      var DOMContentLoaded_event = document.createEvent("Event");
+      DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
+      window.document.dispatchEvent(DOMContentLoaded_event);
+    }, 500);
 ### Mapping DOM to an object
     dom2obj.call(document.body);
 ### Populating DOM with an object
