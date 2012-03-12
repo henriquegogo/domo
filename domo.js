@@ -45,7 +45,7 @@
       tag.type == 'radio' && tag.value == object[key] ? tag.setAttribute("checked", true) :
       tag.tagName == 'BUTTON' || tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
       tag.tagName == 'INPUT' ? tag.value = object[key] :
-      tag.innerHTML = object[key];
+      tag.innerHTML = object[key] || "";
     };
 
     var doObject = function(tag, object, key) {
