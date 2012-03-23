@@ -60,13 +60,6 @@
       applyValues(tag, object[keys[0]], keys[1]);
     };
 
-    var doObject = function(tag, object, key) {
-      console.log('oi');
-      console.log(tag);
-      console.log(object);
-      console.log(key);
-    };
-
     var doArray = function(tag, arr, name) {
       if (tag === tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
         removeSiblings(tag, name);
