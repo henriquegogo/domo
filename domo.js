@@ -46,6 +46,12 @@
       tag.tagName == 'BUTTON' || tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
       tag.tagName == 'INPUT' ? tag.value = object[key] :
       tag.innerHTML = object[key] || "";
+
+      var attributes = tag.attributes;
+
+      for (var i = 0; i < attributes.length; i++)
+        if ( attributes[i].value.match(/{\w*}/g) )
+          attributes[i].value = attributes[i].value.replace(/{(\w*)}/gi, function(m, key) { return object[key]; });
     };
 
     var doObject = function(tag, object, key) {
