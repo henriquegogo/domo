@@ -33,11 +33,11 @@
         try { tag.parentElement.removeChild(siblings[i]); }
         catch(err) { }
       }
-    }
+    };
     
     var applyValues = function(tag, object, key) {
       key = key.toLocaleString();
-      key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? doObject(tag, object, key) :
+      key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? splitKey(tag, object, key) :
       isArray(object[key]) ? doArray(tag, object[key], name) :
       tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
       tag.tagName == 'SELECT' ? tag.value = object[key] :
@@ -54,11 +54,18 @@
           attributes[i].value = attributes[i].value.replace(/{(\w*)}/gi, function(m, key) { return object[key]; });
     };
 
-    var doObject = function(tag, object, key) {
+    var splitKey = function(tag, object, key) {
       var keys = key.match(/\./) ? key.split(".") : key.split("[");
       keys[1] = keys[1].replace("]", "");
       applyValues(tag, object[keys[0]], keys[1]);
-    }
+    };
+
+    var doObject = function(tag, object, key) {
+      console.log('oi');
+      console.log(tag);
+      console.log(object);
+      console.log(key);
+    };
 
     var doArray = function(tag, arr, name) {
       if (tag === tag.parentNode.querySelector("[name='"+name+"']:first-child")) {
@@ -80,7 +87,7 @@
       if (key) {
         key = key.replace(/\[\d*]$/, "");
 
-        if (tag.children.length && tag.querySelector("[name]"))
+        if (tag.children.length && tag.querySelector("[name]") && tag.parentNode.querySelectorAll("[name='"+name+"']").length == 1)
           obj2dom.call(tag, object[key]);
         
         else {
