@@ -39,6 +39,7 @@
       key = key.toLocaleString();
       key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? splitKey(tag, object, key) :
       isArray(object[key]) ? doArray(tag, object[key], name) :
+      isObject(object[key]) ? obj2dom.call(tag, object[key]) :
       tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
       tag.tagName == 'SELECT' ? tag.value = object[key] :
       tag.type == 'checkbox' && object[key] ? tag.setAttribute('checked', true) :
@@ -46,9 +47,11 @@
       tag.tagName == 'BUTTON' || tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
       tag.tagName == 'INPUT' ? tag.value = object[key] :
       tag.innerHTML = object[key] || "";
+    };
 
+    var applyAttributesVariables = function(tag, object, key) {
       var attributes = tag.attributes;
-
+      
       for (var i = 0; i < attributes.length; i++)
         if ( attributes[i].value.match(/{\w*}/g) )
           attributes[i].value = attributes[i].value.replace(/{(\w*)}/gi, function(m, key) { return object[key]; });
@@ -80,10 +83,10 @@
       if (key) {
         key = key.replace(/\[\d*]$/, "");
 
-        if (tag.children.length && tag.querySelector("[name]") && tag.parentNode.querySelectorAll("[name='"+name+"']").length == 1)
+        if (tag.children.length && tag.querySelector("[name]") && !isArray(object[key])) {
           obj2dom.call(tag, object[key]);
         
-        else {
+        } else {
           uncheck(tag);
           applyValues(tag, object, key);
         }
@@ -91,6 +94,8 @@
       } else {
         obj2dom.call(tag, object);
       }
+
+      applyAttributesVariables(tag, object, key);
     }
   };
 

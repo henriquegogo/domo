@@ -24,7 +24,7 @@
   <hr>
 
   <h2>Children tags</h2>
-  <div name="parents">
+  <div name="parents[]">
     <p>The super <b name="son">Davidson</b></p>
     <p name="daughter">Sarah <i>(the princess)</i></p>
     <ul>
@@ -32,7 +32,7 @@
       <li name="sons">She</li>
     </ul>
   </div>
-  <div name="parents">
+  <div name="parents[]">
     <p>The super <b name="son">Beggerson</b></p>
     <p name="daughter">Letícia <i>(the princess)</i></p>
     <ul>
@@ -47,7 +47,7 @@
   <form>
     <div class="field">
       <label>Name</label>
-      <input type="text" name="name" value="David">
+      <a name="name" href="/user/{name}">David</a>
     </div>
     <label>Description</label>
     <textarea name="description">This is an awesome lib.</textarea>
