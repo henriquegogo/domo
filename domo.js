@@ -152,8 +152,14 @@
     window.domo.onchange();
     obj2dom(window.domo.body);
 
+    window.domo.sync = function() {
+      obj2dom(window.domo.body);
+      window.domo.onchange();
+    };
+
     document.addEventListener("change", function() {
       window.domo.body = dom2obj();
+      window.domo.onchange();
     });
   });
 })();
