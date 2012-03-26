@@ -49,12 +49,15 @@
       tag.innerHTML = object[key] || "";
     };
 
-    var applyAttributesVariables = function(tag, object, key) {
+    var applyAttributesVariables = function(tag, object) {
       var attributes = tag.attributes;
       
       for (var i = 0; i < attributes.length; i++)
-        if ( attributes[i].value.match(/{\w*}/g) )
-          attributes[i].value = attributes[i].value.replace(/{(\w*)}/gi, function(m, key) { return object[key]; });
+        if ( attributes[i].value.match(/{\w*}/g) ) {
+          var attrName = attributes[i].name;
+          var attrValue = attributes[i].value.replace(/{(\w*)}/gi, function(m, key) { return object[key]; });
+          setTimeout(function() { tag.setAttribute(attrName, attrValue); }, 0);
+        }
     };
 
     var splitKey = function(tag, object, key) {
@@ -95,7 +98,7 @@
         obj2dom.call(tag, object);
       }
 
-      //applyAttributesVariables(tag, object, key);
+      applyAttributesVariables(tag, object);
     }
   };
 
@@ -149,13 +152,13 @@
     window.domo = window.domo || {};
     window.domo.body = window.domo.body || dom2obj();
     window.domo.onchange = window.domo.onchange || function() {};
-    window.domo.onchange();
-    obj2dom(window.domo.body);
 
     window.domo.sync = function() {
       obj2dom(window.domo.body);
       window.domo.onchange();
     };
+
+    window.domo.sync();
 
     document.addEventListener("change", function() {
       window.domo.body = dom2obj();
@@ -163,3 +166,4 @@
     });
   });
 })();
+
