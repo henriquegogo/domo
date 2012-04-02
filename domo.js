@@ -70,7 +70,7 @@
       };
 
       var doArray = function(tag, arr, name) {
-        if (tag === tag.parentElement.querySelector("[name='"+name+"']:first-child")) {
+        if (tag === tag.parentElement.querySelector("[name='"+name+"']:first-of-type")) {
           removeSiblings(tag, name);
           applyValues(tag, arr, 0);
 
@@ -85,7 +85,7 @@
       for (var i = 0; i < el.length; i++) {
         var tag = el[i];
         var key = name = tag.getAttribute("name");
-        
+
         if (key) {
           key = key.replace(/\[\d*]$/, "");
 
