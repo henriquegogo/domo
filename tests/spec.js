@@ -23,8 +23,22 @@ describe("Domo", function() {
       };
     });
 
-    it("can fill input with an object", function() {
-      object.list.toDom( document.body.querySelector("ul:first-of-type") );
+    it("can fill list with an array object", function() {
+      var listElement = document.getElementById("test-list").cloneNode(true);
+      object.toDom(listElement);
+      var html = listElement.innerHTML;
+
+      expect(html).toMatch('One item');
+      expect(html).toMatch('Other item');
+    });
+
+    it("can fill list if name like array with an array object", function() {
+      var listElement = document.getElementById("test-list-array-forced").cloneNode(true);
+      object.toDom(listElement);
+      var html = listElement.innerHTML;
+      
+      expect(html).toMatch('One item list');
+      expect(html).toMatch('Other item in one item list');
     });
   });
 

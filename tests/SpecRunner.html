@@ -46,7 +46,7 @@
 <body>
   <div id="domo" style="display: none">
     <h2>Simple list</h2>
-    <ul>
+    <ul id="test-list">
       <li name="list">First</li>
       <li name="list">Second</li>
       <li name="list">Third</li>
@@ -55,14 +55,14 @@
     <hr>
 
     <h2>Array forced list</h2>
-    <ul>
+    <ul id="test-list-array-forced">
       <li name="listWithOne[]">One item list</li>
     </ul>
 
     <hr>
 
     <h2>Children tags</h2>
-    <div>
+    <div id="test-children-tags">
       <div name="parents[]">
         <p>The super <b name="son">Davidson</b></p>
         <p name="daughter">Sarah <i>(the princess)</i></p>
@@ -84,7 +84,7 @@
     <hr>
 
     <h2>Form</h2>
-    <form>
+    <form id="test-form">
       <div class="field">
         <label>Name</label>
         <a name="name" href="/user/{name}">David</a>
@@ -120,7 +120,7 @@
 
     <hr>
     
-    <fieldset name="people">
+    <fieldset id="test-props" name="people">
       <h2>object.props</h2>
       <label>Client ID</label>
       <input type="text" name="client.id" value="2">
