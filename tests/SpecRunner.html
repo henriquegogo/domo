@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <title>Jasmine Spec Runner</title>
+
+  <link rel="stylesheet" type="text/css" href="jasmine/jasmine.css">
+  <script type="text/javascript" src="jasmine/jasmine.js"></script>
+  <script type="text/javascript" src="jasmine/jasmine-html.js"></script>
+
+  <script type="text/javascript" src="../domo.js"></script>
+  <script type="text/javascript" src="spec.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var trivialReporter = new jasmine.TrivialReporter();
+
+      jasmineEnv.addReporter(trivialReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="domo" style="display: none">
+    <h2>Simple list</h2>
+    <ul>
+      <li name="list">First</li>
+      <li name="list">Second</li>
+      <li name="list">Third</li>
+    </ul>
+    
+    <hr>
+
+    <h2>Array forced list</h2>
+    <ul>
+      <li name="listWithOne[]">One item list</li>
+    </ul>
+
+    <hr>
+
+    <h2>Children tags</h2>
+    <div>
+      <div name="parents[]">
+        <p>The super <b name="son">Davidson</b></p>
+        <p name="daughter">Sarah <i>(the princess)</i></p>
+        <ul>
+          <li name="sons">He</li>
+          <li name="sons">She</li>
+        </ul>
+      </div>
+      <div name="parents[]">
+        <p>The super <b name="son">Beggerson</b></p>
+        <p name="daughter">Letícia <i>(the princess)</i></p>
+        <ul>
+          <li name="sons">He</li>
+          <li name="sons">She</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2>Form</h2>
+    <form>
+      <div class="field">
+        <label>Name</label>
+        <a name="name" href="/user/{name}">David</a>
+      </div>
+      <label>Description</label>
+      <textarea name="description">This is an awesome lib.</textarea>
+      <br>
+      <label>Sex</label>
+      <input type="radio" name="sex" value="Female"> Female
+      <input type="radio" name="sex" value="Male" checked> Male
+      <input type="radio" name="sex" value="Dont know"> Dont know
+      <br>
+      <label>Is human?</label>
+      <input type="checkbox" name="human" checked>
+      <br>
+      <label>Want to receive emails?</label>
+      <input type="checkbox" name="emails">
+      <br>
+      <label>Civil state</label>
+      <select name="civil_state">
+        <option>Single</option>
+        <option selected>Married</option>
+        <option>I dont know</option>
+      </select>
+      <br>
+      <label>City</label>
+      <select name="city">
+        <option value="FOR">Fortaleza</option>
+        <option value="NY" selected>New York</option>
+        <option value="MI">Miami</option>
+      </select>
+    </form>
+
+    <hr>
+    
+    <fieldset name="people">
+      <h2>object.props</h2>
+      <label>Client ID</label>
+      <input type="text" name="client.id" value="2">
+      <br>
+      <label>Client Name</label>
+      <input type="text" name="client.name" value="Robert">
+
+      <hr>
+
+      <h2>object[props]</h2>
+      <div>
+        <label>Product ID</label>
+        <input type="text" name="product[Identify]" value="1">
+      </div>
+      <div>
+        <div>
+          <label>Product Name</label>
+          <input type="text" name="product[firstName]" value="Soccer shoes">
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+</body>
+</html>
