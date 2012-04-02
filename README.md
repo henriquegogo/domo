@@ -15,6 +15,6 @@ or
       window.document.dispatchEvent(DOMContentLoaded_event);
     }, 500);
 ### Mapping DOM to an object
-    dom2obj.call(document.body);
+    document.body.toObject();
 ### Populating DOM with an object
-    obj2dom.call(document.body, {});
+    domo.body.toDom();
