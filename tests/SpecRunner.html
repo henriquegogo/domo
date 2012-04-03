@@ -119,29 +119,31 @@
     </form>
 
     <hr>
-    
-    <fieldset id="test-props" name="people">
-      <h2>object.props</h2>
-      <label>Client ID</label>
-      <input type="text" name="client.id" value="2">
-      <br>
-      <label>Client Name</label>
-      <input type="text" name="client.name" value="Robert">
 
-      <hr>
+    <div id="test-props">
+      <fieldset name="people">
+        <h2>object.props</h2>
+        <label>Client ID</label>
+        <input type="text" name="client.id" value="2">
+        <br>
+        <label>Client Name</label>
+        <input type="text" name="client.name" value="Robert">
 
-      <h2>object[props]</h2>
-      <div>
-        <label>Product ID</label>
-        <input type="text" name="product[Identify]" value="1">
-      </div>
-      <div>
+        <hr>
+
+        <h2>object[props]</h2>
         <div>
-          <label>Product Name</label>
-          <input type="text" name="product[firstName]" value="Soccer shoes">
+          <label>Product ID</label>
+          <input type="text" name="product[Identify]" value="1">
         </div>
-      </div>
-    </fieldset>
+        <div>
+          <div>
+            <label>Product Name</label>
+            <input type="text" name="product[firstName]" value="Soccer shoes">
+          </div>
+        </div>
+      </fieldset>
+    </div>
   </div>
 
 </body>

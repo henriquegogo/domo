@@ -24,28 +24,28 @@ describe("Domo", function() {
     });
 
     it("can fill list with an array object", function() {
-      var listElement = document.getElementById("test-list").cloneNode(true);
-      object.toDom(listElement);
-      var html = listElement.innerHTML;
+      var el = document.getElementById("test-list").cloneNode(true);
+      object.toDom(el);
+      var html = el.innerHTML;
 
       expect(html).toMatch('One item');
       expect(html).toMatch('Other item');
     });
 
     it("can fill list if name like array with an array object", function() {
-      var listElement = document.getElementById("test-list-array-forced").cloneNode(true);
-      object.toDom(listElement);
-      var html = listElement.innerHTML;
+      var el = document.getElementById("test-list-array-forced").cloneNode(true);
+      object.toDom(el);
+      var html = el.innerHTML;
       
       expect(html).toMatch('One item list');
       expect(html).toMatch('Other item in one item list');
     });
 
     it("can change nested proprieties in array tags", function() {
-      var listElement = document.getElementById("test-children-tags").cloneNode(true);
-      object.toDom(listElement);
-      var html = listElement.innerHTML;
-      var items = listElement.querySelectorAll("[name='parents[]']")
+      var el = document.getElementById("test-children-tags").cloneNode(true);
+      object.toDom(el);
+      var html = el.innerHTML;
+      var items = el.querySelectorAll("[name='parents[]']")
       
       expect(items.length).toEqual(1);
       expect(html).toMatch('Henrique');
@@ -56,18 +56,18 @@ describe("Domo", function() {
     });
 
     it("can set attribute value with variable marks", function() {
-      var listElement = document.getElementById("name").cloneNode(true);
-      object.toDom(listElement);
-      var html = listElement.outerHTML;
+      var el = document.getElementById("name").cloneNode(true);
+      object.toDom(el);
+      var html = el.outerHTML;
       
       expect(html).toMatch('/user/David');
     });
 
     it("can fill form fields", function() {
-      var listElement = document.getElementById("test-form").cloneNode(true);
-      object.toDom(listElement);
-      var html = listElement.innerHTML;
-      var city = listElement.querySelector("[name=city]");
+      var el = document.getElementById("test-form").cloneNode(true);
+      object.toDom(el);
+      var html = el.innerHTML;
+      var city = el.querySelector("[name=city]");
       
       expect(html).toMatch('Diane');
       expect(html).toMatch('What do you want?');
@@ -78,18 +78,18 @@ describe("Domo", function() {
     });
 
     it("can fill form fields with string representation of object.property", function() {
-      var listElement = document.getElementById("test-props").cloneNode(true);
-      object.toDom(listElement);
-      var client_id = listElement.querySelector("[name='client.id']");
-      var client_name = listElement.querySelector("[name='client.name']");
-      var product_identify = listElement.querySelector("[name='product[Identify]']");
-      var product_firstName = listElement.querySelector("[name='product[Identify]']");
-      var html = listElement.outerHTML;
+      var el = document.getElementById("test-props").cloneNode(true);
+      object.toDom(el);
+      var client_id = el.querySelector("[name='client.id']");
+      var client_name = el.querySelector("[name='client.name']");
+      var product_identify = el.querySelector("[name='product[Identify]']");
+      var product_firstName = el.querySelector("[name='product[firstName]']");
+      var html = el.outerHTML;
       
-      // expect(client_id.value).toEqual('1');
-      // expect(client_name.value).toEqual('Gilbert');
-      // expect(product_identify.value).toEqual('33');
-      // expect(product_firstName.value).toEqual('iPod');
+      expect(client_id.value).toEqual('1');
+      expect(client_name.value).toEqual('Gilbert');
+      expect(product_identify.value).toEqual('33');
+      expect(product_firstName.value).toEqual('iPod');
     });
   });
 
