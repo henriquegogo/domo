@@ -103,6 +103,8 @@
 
         applyAttributesVariables(tag, object);
       }
+
+      return container;
     }
   });
 
@@ -153,13 +155,11 @@
 
   // Init
   document.addEventListener("DOMContentLoaded", function() {
-    window.domo = window.domo || {};
-    window.domo.body = window.domo.body || document.body.toObject();
-
-    window.domo.body.toDom();
+    window.domo = window.domo || document.body.toObject();
+    window.domo.toDom();
 
     document.addEventListener("change", function() {
-      window.domo.body = document.body.toObject();
+      window.domo = document.body.toObject();
     });
   });
 })();
