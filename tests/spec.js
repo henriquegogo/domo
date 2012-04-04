@@ -1,95 +1,169 @@
 describe("Domo", function() {
+  Element.prototype.find = Element.prototype.querySelector;
+  Element.prototype.findAll = Element.prototype.querySelectorAll;
+  
   describe("Object to DOM", function() {
-    var object;
+    var object, element;
     
     beforeEach(function() {
-      object = {
-        "list": ["One item", "Other item"],
-        "listWithOne": ["One item list", "Other item in one item list"],
-        "parents": [
-          {"son":"Henrique","daughter":"Mariah","sons": ["Mary", "Smith", "James"]},
-        ],
-        "name": "Diane",
-        "description": "What do you want?",
-        "sex": "Female",
-        "human": true,
-        "emails": true,
-        "civil_state": "Single",
-        "city": "FOR",
-        "people": {
-          "client": {"id": "1","name": "Gilbert"},
-          "product": {"Identify": "33", "firstName": "iPod"}
-        }
-      };
+      element = document.createElement("div");
     });
 
     it("can fill list with an array object", function() {
-      var el = document.getElementById("test-list").cloneNode(true);
-      object.toDom(el);
-      var html = el.innerHTML;
+      object = { list: ["First","Second","Third"] };
+      
+      element.innerHTML = '\
+      <ul>\
+        <li name="list"></li>\
+      </ul>';
 
-      expect(html).toMatch('One item');
-      expect(html).toMatch('Other item');
+      object.toDom(element);
+      var items = element.findAll("[name=list]");
+      
+      expect(items.length).toEqual(3);
+      expect(items[0].innerHTML).toEqual('First');
+      expect(items[1].innerHTML).toEqual('Second');
+      expect(items[2].innerHTML).toEqual('Third');
     });
 
     it("can fill list if name like array with an array object", function() {
-      var el = document.getElementById("test-list-array-forced").cloneNode(true);
-      object.toDom(el);
-      var html = el.innerHTML;
+      object = { listWithOne: ["One item list"] };
+
+      element.innerHTML = '\
+      <ul>\
+        <li name="listWithOne[]"></li>\
+      </ul>';
+    
+      object.toDom(element);
+      var items = element.findAll("[name='listWithOne[]']");
       
-      expect(html).toMatch('One item list');
-      expect(html).toMatch('Other item in one item list');
+      expect(items.length).toEqual(1);
+      expect(items[0].innerHTML).toEqual('One item list');
     });
 
     it("can change nested proprieties in array tags", function() {
-      var el = document.getElementById("test-children-tags").cloneNode(true);
-      object.toDom(el);
-      var html = el.innerHTML;
-      var items = el.querySelectorAll("[name='parents[]']")
+      object = { parents: [
+                  { father: "Davidson", mother: "Sarah", sons: 
+                    ["Daniel", "Michael"]
+                  },
+                  { father: "Beggerson", mother: "Leka", sons:
+                    ["Mary","July"]
+                  }
+                ] };
+
+      element.innerHTML = '\
+      <div name="parents[]">\
+        <p>Senior <b name="father"></b> and <b name="mother"></b></p>\
+        <ul>\
+          <li name="sons"></li>\
+        </ul>\
+      </div>';
+    
+      object.toDom(element);
+      var parents = element.findAll("[name='parents[]']");
       
-      expect(items.length).toEqual(1);
-      expect(html).toMatch('Henrique');
-      expect(html).toMatch('Mariah');
-      expect(html).toMatch('Mary');
-      expect(html).toMatch('Smith');
-      expect(html).toMatch('James');
+      expect(parents.length).toEqual(2);
+      expect(parents[0].find("[name=father]").innerHTML).toEqual('Davidson');
+      expect(parents[0].find("[name=mother]").innerHTML).toEqual('Sarah');
+      expect(parents[0].findAll("[name=sons]").length).toEqual(2);
+      expect(parents[0].findAll("[name=sons]")[0].innerHTML).toEqual('Daniel');
+      expect(parents[0].findAll("[name=sons]")[1].innerHTML).toEqual('Michael');
+      expect(parents[1].find("[name=father]").innerHTML).toEqual('Beggerson');
+      expect(parents[1].find("[name=mother]").innerHTML).toEqual('Leka');
+      expect(parents[1].findAll("[name=sons]").length).toEqual(2);
+      expect(parents[1].findAll("[name=sons]")[0].innerHTML).toEqual('Mary');
+      expect(parents[1].findAll("[name=sons]")[1].innerHTML).toEqual('July');
     });
 
     it("can set attribute value with variable marks", function() {
-      var el = document.getElementById("name").cloneNode(true);
-      object.toDom(el);
-      var html = el.outerHTML;
-      
-      expect(html).toMatch('/user/David');
+      object = { name: "David" };
+
+      element.innerHTML = '<a name="name" href="/user/{name}"></a>';
+
+      object.toDom(element);
+      var link = element.find("a");
+
+      setTimeout(function() {
+        expect(link.getAttribute('href')).toEqual('/user/David');
+        expect(link.innerHTML).toEqual('David');
+      }, 0);
     });
 
     it("can fill form fields", function() {
-      var el = document.getElementById("test-form").cloneNode(true);
-      object.toDom(el);
-      var html = el.innerHTML;
-      var city = el.querySelector("[name=city]");
-      
-      expect(html).toMatch('Diane');
-      expect(html).toMatch('What do you want?');
-      expect(html).toMatch('"Female" checked="true"');
-      expect(html).toMatch('"human" checked="true"');
-      expect(html).toMatch('"emails" checked="true"');
-      expect(city.value).toEqual('FOR');
+      object = { description: "This is an awesome lib.",
+                 sex: "Male", human: true, emails: false,
+                 civil_state: "Married", city: "NY"
+               };
+
+      element.innerHTML = '\
+      <form>\
+        <label>Description</label>\
+        <textarea name="description"></textarea>\
+        <label>Sex</label>\
+        <input type="radio" name="sex" value="Female"> Female\
+        <input type="radio" name="sex" value="Male"> Male\
+        <input type="radio" name="sex" value="Dont know"> Dont know\
+        <label>Is human?</label>\
+        <input type="checkbox" name="human">\
+        <label>Want to receive emails?</label>\
+        <input type="checkbox" name="emails">\
+        <label>Civil state</label>\
+        <select name="civil_state">\
+          <option>Single</option>\
+          <option>Married</option>\
+          <option>I dont know</option>\
+        </select>\
+        <label>City</label>\
+        <select name="city">\
+          <option value="FOR">Fortaleza</option>\
+          <option value="NY">New York</option>\
+          <option value="MI">Miami</option>\
+        </select>\
+      </form>';
+
+      object.toDom(element);
+      var form = element.find("form");
+    
+      expect(form.description.value).toEqual('This is an awesome lib.');
+      expect(form.find("[name=sex]:checked").value).toEqual('Male');
+      expect(form.find("[name=human]:checked")).toBeTruthy();
+      expect(form.find("[name=emails]:checked")).toBeNull();
+      expect(form.civil_state.value).toEqual('Married');
+      expect(form.city.value).toEqual('NY');
     });
 
     it("can fill form fields with string representation of object.property", function() {
-      var el = document.getElementById("test-props").cloneNode(true);
-      object.toDom(el);
-      var client_id = el.querySelector("[name='client.id']");
-      var client_name = el.querySelector("[name='client.name']");
-      var product_identify = el.querySelector("[name='product[Identify]']");
-      var product_firstName = el.querySelector("[name='product[firstName]']");
-      var html = el.outerHTML;
-      
-      expect(client_id.value).toEqual('1');
-      expect(client_name.value).toEqual('Gilbert');
-      expect(product_identify.value).toEqual('33');
-      expect(product_firstName.value).toEqual('iPod');
+      object = { people: 
+                 { client: { id: "2", name: "Robert" },
+                   product: {Identify: "1", description: "Soccer shoes" }
+                 }
+               };
+
+      element.innerHTML = '\
+      <div name="people">\
+        <label>Client ID</label>\
+        <input type="text" name="client.id">\
+        <label>Client Name</label>\
+        <input type="text" name="client.name">\
+        <div>\
+          <label>Product ID</label>\
+          <input type="text" name="product[Identify]">\
+        </div>\
+        <div>\
+          <div>\
+            <label>Product Name</label>\
+            <input type="text" name="product[description]">\
+          </div>\
+        </div>\
+      </div>';
+
+      object.toDom(element);
+
+      expect(element.find("[name='client.id']").value).toEqual('2');
+      expect(element.find("[name='client.name']").value).toEqual('Robert');
+      expect(element.find("[name='product[Identify]']").value).toEqual('1');
+      expect(element.find("[name='product[description]']").value).toEqual('Soccer shoes');
+
     });
   });
 
