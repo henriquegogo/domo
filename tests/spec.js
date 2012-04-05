@@ -99,7 +99,6 @@ describe("Domo", function() {
       <form>\
         <label>Description</label>\
         <textarea name="description"></textarea>\
-        <label>Sex</label>\
         <input type="radio" name="sex" value="Female"> Female\
         <input type="radio" name="sex" value="Male"> Male\
         <input type="radio" name="sex" value="Dont know"> Dont know\
