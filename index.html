@@ -9,16 +9,13 @@
 
   <style>
     html {
-      height: 100%;
-      overflow: auto;
+      width: 100%;
+      min-height: 100%;
     }
     body {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
       margin: 0;
+      width: 100%;
+      height: 100%;
       font-family: Ruda, sans-serif;
       overflow-x: hidden;
       background: #E5EFF3;
@@ -45,9 +42,8 @@
     header {
       position: relative;
       display: block;
-      margin: 0 auto;
       padding: 40px 0 10px;
-      width: 750px;
+      width: 100%;
       color: #FFF;
       background: #000;
     }
@@ -64,30 +60,41 @@
       bottom: -38px;
       right: 0;
     }
-    header:before,
-    header:after {
-      position: absolute;
-      display: block;
-      content: "";
-      top: 0;
-      width: 9999px;
-      height: 100%;
-      background: #000;
-    }
-    header:before { left: -9999px; }
-    header:after { left: 750px; }
     section {
       margin: 0 auto;
       width: 750px;
     }
-    iframe { display: none; }
+    footer {
+      position: relative;
+      display: block;
+      padding: 10px 0;
+      width: 100%;
+      font-size: 13px;
+      color: #FFF;
+      background: #000;
+    }
+    footer a {
+      font-weight: bold;
+      text-decoration: none;
+      color: #FFF;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      position: relative;
+      margin: 0 auto;
+      width: 750px;
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>DOMO</h1>
-    <h2>Nicely sweet DOM-Object-DOM with simplicity</h2>
-    <img src="logo.png">
+    <div class="container">
+      <h1>DOMO</h1>
+      <h2>Nicely sweet DOM-Object-DOM with simplicity</h2>
+      <img src="logo.png">
+    </div>
   </header>
 
   <a href="http://github.com/henriquegogo/domo">
@@ -95,6 +102,13 @@
   </a>
 
   <section></section>
+
+  <footer>
+    <div class="container">
+      © 2012 <a href="http://gogs.com.br">Henrique Gogó</a>.
+      All code provided is open source under the MIT License.
+    </div>
+  </footer>
 </body>
 
 <script type="text/javascript">
