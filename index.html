@@ -94,22 +94,38 @@
     <img alt="Fork me on GitHub" style="position: absolute; top: 0; right: 0; border: 0;" src="forkme.png">
   </a>
 
-  <section><iframe src="documentation.txt"></iframe></section>
+  <section></section>
 </body>
 
-<script src="showdown.js"></script>
-<script>
-  var converter = new Showdown.converter();
-  var container = document.querySelector("section");
-  var txt = document.querySelector("iframe").contentDocument.body.children[0].innerHTML;
-  var html = converter.makeHtml(txt);
-  container.innerHTML = html
+<script type="text/javascript">
+function load(url, callback) {
+  var xmlhttp;
+  xmlhttp = (window.XMLHttpRequest) ?
+    new XMLHttpRequest() :
+    new ActiveXObject("Microsoft.XMLHTTP");
+  
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+      return callback(xmlhttp.responseText);
+  }
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
 </script>
 
-<script src="highlight.min.js"></script>
+<script type="text/javascript" src="highlight.min.js"></script>
 <link rel="stylesheet" type="text/css" href="highlight.min.css">
-<script>hljs.initHighlightingOnLoad();</script>
 
-<script src="src/domo.js"></script>
+<script type="text/javascript" src="showdown.js"></script>
+<script type="text/javascript">
+  var converter = new Showdown.converter();
+  var container = document.querySelector("section");
+  load("README.md", function(txt) {
+    container.innerHTML = converter.makeHtml(txt);
+    hljs.initHighlighting();
+  });
+</script>
+
+<script type="text/javascript" src="src/domo.js"></script>
 
 </html>
