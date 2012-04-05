@@ -235,7 +235,6 @@ describe("Domo", function() {
       <form>\
         <label>Description</label>\
         <textarea name="description">This is an awesome lib.</textarea>\
-        <label>Sex</label>\
         <input type="radio" name="sex" value="Female"> Female\
         <input type="radio" name="sex" value="Male" checked="checked"> Male\
         <input type="radio" name="sex" value="Dont know"> Dont know\
