@@ -38,7 +38,7 @@
       };
       
       var applyValues = function(tag, object, key) {
-        key = key.toLocaleString();
+        key = "" + key;
         key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? splitKey(tag, object, key) :
         isArray(object[key]) ? doArray(tag, object[key], name) :
         isObject(object[key]) ? object[key].toDom(tag) :
