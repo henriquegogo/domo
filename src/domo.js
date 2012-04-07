@@ -152,15 +152,5 @@
 
     return result;
   };
-
-  // Init
-  document.addEventListener("DOMContentLoaded", function() {
-    window.domo = window.domo || document.body.toObject();
-    window.domo.toDom();
-
-    document.addEventListener("change", function() {
-      window.domo = document.body.toObject();
-    });
-  });
 })();
 
