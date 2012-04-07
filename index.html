@@ -62,6 +62,7 @@
     }
     section {
       margin: 0 auto;
+      padding: 20px 0;
       width: 750px;
     }
     footer {
@@ -172,7 +173,7 @@ function applyRunCode() {
 
   for (var i in htmls) {
     var container = document.createElement("div");
-    var text = htmls[i].innerText;
+    var text = htmls[i].textContent;
     
     if (text) {
       if (i <= 5)

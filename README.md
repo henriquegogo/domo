@@ -153,20 +153,20 @@ You can map DOM to an object.
 ### Map form fields into object
     <form>
       <label>Description</label><br>
-      <textarea name="description">This is an awesome lib.</textarea>
+      <textarea name="description">This is an awesome lib.</textarea><br>
       <input type="radio" name="sex" value="Female"> Female
       <input type="radio" name="sex" value="Male" checked="checked"> Male
-      <input type="radio" name="sex" value="Dont know"> Dont know
+      <input type="radio" name="sex" value="Dont know"> Dont know<br>
       <label>Is human?</label>
-      <input type="checkbox" name="human" checked="checked">
+      <input type="checkbox" name="human" checked="checked"><br>
       <label>Want to receive emails?</label>
-      <input type="checkbox" name="emails">
+      <input type="checkbox" name="emails"><br>
       <label>Civil state</label>
       <select name="civil_state">
         <option>Single</option>
         <option selected="selected">Married</option>
         <option>I dont know</option>
-      </select>
+      </select><br>
       <label>City</label>
       <select name="city">
         <option value="FOR">Fortaleza</option>
@@ -180,7 +180,7 @@ You can map DOM to an object.
 ### Map form fields with string representation of object.property into object
     <div name="people">
       <label>Client ID</label>
-      <input type="text" name="client.id" value="2">
+      <input type="text" name="client.id" value="2"><br>
       <label>Client Name</label>
       <input type="text" name="client.name" value="Robert">
       <div>
