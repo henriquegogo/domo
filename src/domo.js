@@ -23,9 +23,10 @@
       var el = (container.name) ? [container] : container.children;
 
       var uncheck = function(tag) {
-        if (tag.type == 'checkbox' || tag.type == 'radio')
+        if (tag.type == 'checkbox' || tag.type == 'radio') {
           tag.removeAttribute('checked');
-        else if (tag.querySelector("[selected]"))
+          tag.checked = false;
+        } else if (tag.querySelector("[selected]"))
           tag.querySelector("[selected]").removeAttribute('selected');
       };
 
@@ -36,6 +37,16 @@
           catch(err) { }
         }
       };
+
+      var setSelectTagValue = function(tag, value) {
+        tag.value = value;
+        // This code below is just because iE needs
+        var options = tag.children;
+        for (var i in options) {
+          if (options[i].value == value)
+            options[i].selected = true;
+        }
+      }
       
       var applyValues = function(tag, object, key) {
         key = "" + key;
@@ -43,9 +54,9 @@
         isArray(object[key]) ? doArray(tag, object[key], name) :
         isObject(object[key]) ? object[key].toDom(tag) :
         tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
-        tag.tagName == 'SELECT' ? tag.value = object[key] :
-        tag.type == 'checkbox' && object[key] ? tag.setAttribute('checked', true) :
-        tag.type == 'radio' && tag.value == object[key] ? tag.setAttribute("checked", true) :
+        tag.tagName == 'SELECT' ? setSelectTagValue(tag, object[key]) :
+        tag.type == 'checkbox' && object[key] ? tag.checked = true :
+        tag.type == 'radio' && tag.value == object[key] ? tag.checked = true :
         tag.tagName == 'BUTTON' || tag.type == 'file' || tag.type == 'radio' || tag.type == 'checkbox' ? false :
         tag.tagName == 'INPUT' ? tag.value = object[key] :
         tag.innerHTML = object[key] || "";
