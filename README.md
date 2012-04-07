@@ -1,6 +1,8 @@
 # Object to DOM
 You can fill DOM values with an object.
 
+**object.toDom()** is the same as **object.toDom(** *document.body* **)**
+
 ----------
 
 ### Fill list with an array object
@@ -9,11 +11,6 @@ You can fill DOM values with an object.
     <ul>
       <li name="list"></li>
     </ul>
-[Let's make it work](javascript:object.toDom(document.getElementById('list'\) \))
-
-<ul id="list">
-  <li name="list"></li>
-</ul>
 
 ----------
 
@@ -23,11 +20,6 @@ You can fill DOM values with an object.
     <ul>
       <li name="listWithOne[]"></li>
     </ul>
-[Let's make it work](javascript:object.toDom(document.getElementById('listWithOne'\) \))
-
-<ul id="listWithOne">
-  <li name="listWithOne[]"></li>
-</ul>
 
 ----------
 
@@ -47,16 +39,6 @@ You can fill DOM values with an object.
         <li name="sons"></li>
       </ul>
     </div>
-[Let's make it work](javascript:object.toDom(document.getElementById('parents'\) \))
-
-<div id="parents">
-  <div name="parents[]">
-    <p>Senior <b name="father"></b> and <b name="mother"></b></p>
-    <ul>
-      <li name="sons"></li>
-    </ul>
-  </div>
-</div>
 
 ----------
 
@@ -64,11 +46,6 @@ You can fill DOM values with an object.
     var object = { name: "David" };
 <!-- -->
     <a name="name" href="/user/{name}"></a>
-[Let's make it work](javascript:object.toDom(document.getElementById('name'\) \))
-
-<div id="name">
-  <a name="name" href="/user/{name}"></a>
-</div>
 
 ----------
 
@@ -79,21 +56,21 @@ You can fill DOM values with an object.
                  };
 <!-- -->
     <form>
-      <label>Description</label>
-      <textarea name="description"></textarea>
+      <label>Description</label><br>
+      <textarea name="description"></textarea><br>
       <input type="radio" name="sex" value="Female"> Female
       <input type="radio" name="sex" value="Male"> Male
-      <input type="radio" name="sex" value="Dont know"> Dont know
+      <input type="radio" name="sex" value="Dont know"> Dont know<br>
       <label>Is human?</label>
-      <input type="checkbox" name="human">
+      <input type="checkbox" name="human"><br>
       <label>Want to receive emails?</label>
-      <input type="checkbox" name="emails">
+      <input type="checkbox" name="emails"><br>
       <label>Civil state</label>
       <select name="civil_state">
         <option>Single</option>
         <option>Married</option>
         <option>I dont know</option>
-      </select>
+      </select><br>
       <label>City</label>
       <select name="city">
         <option value="FOR">Fortaleza</option>
@@ -101,31 +78,6 @@ You can fill DOM values with an object.
         <option value="MI">Miami</option>
       </select>
     </form>
-[Let's make it work](javascript:object.toDom(document.getElementById('form'\) \))
-
-<form id="form">
-  <label>Description</label><br>
-  <textarea name="description"></textarea><br>
-  <input type="radio" name="sex" value="Female"> Female
-  <input type="radio" name="sex" value="Male"> Male
-  <input type="radio" name="sex" value="Dont know"> Dont know<br>
-  <label>Is human?</label>
-  <input type="checkbox" name="human"><br>
-  <label>Want to receive emails?</label>
-  <input type="checkbox" name="emails"><br>
-  <label>Civil state</label>
-  <select name="civil_state">
-    <option>Single</option>
-    <option>Married</option>
-    <option>I dont know</option>
-  </select><br>
-  <label>City</label>
-  <select name="city">
-    <option value="FOR">Fortaleza</option>
-    <option value="NY">New York</option>
-    <option value="MI">Miami</option>
-  </select>
-</form>
 
 ----------
 
@@ -138,7 +90,7 @@ You can fill DOM values with an object.
 <!-- -->
     <div name="people">
       <label>Client ID</label>
-      <input type="text" name="client.id">
+      <input type="text" name="client.id"><br>
       <label>Client Name</label>
       <input type="text" name="client.name">
       <div>
@@ -152,31 +104,13 @@ You can fill DOM values with an object.
         </div>
       </div>
     </div>
-[Let's make it work](javascript:object.toDom(document.getElementById('people'\) \))
-
-<div id="people">
-  <div name="people">
-    <label>Client ID</label>
-    <input type="text" name="client.id">
-    <label>Client Name</label>
-    <input type="text" name="client.name">
-    <div>
-      <label>Product ID</label>
-      <input type="text" name="product[Identify]">
-    </div>
-    <div>
-      <div>
-        <label>Product Name</label>
-        <input type="text" name="product[description]">
-      </div>
-    </div>
-  </div>
-</div>
 
 ----------
 
 # DOM to Object
 You can map DOM to an object.
+
+**element.toObject()**
 
 ----------
 
@@ -186,13 +120,6 @@ You can map DOM to an object.
       <li name="list">Second</li>
       <li name="list">Third</li>
     </ul>
-<!-- -->
-<ul id="list-dom">
-  <li name="list">First</li>
-  <li name="list">Second</li>
-  <li name="list">Third</li>
-</ul>
-[Let's make it work](javascript:alert( JSON.stringify( document.getElementById('list-dom'\).toObject(\) \) \))
 
 ----------
 
@@ -200,11 +127,6 @@ You can map DOM to an object.
     <ul>
       <li name="listWithOne[]">One item list</li>
     </ul>
-<!-- -->
-<ul id="listWithOne-dom">
-  <li name="listWithOne[]">One item list</li>
-</ul>
-[Let's make it work](javascript:alert( JSON.stringify( document.getElementById('listWithOne-dom'\).toObject(\) \) \))
 
 ----------
 
@@ -225,24 +147,6 @@ You can map DOM to an object.
         </ul>
       </div>
     </div>
-<!-- -->
-<div id="parents-dom">
-  <div name="parents[]">
-    <p>Senior <b name="father">Davidson</b> and <b name="mother">Sarah</b></p>
-    <ul>
-      <li name="sons">Daniel</li>
-      <li name="sons">Michael</li>
-    </ul>
-  </div>
-  <div name="parents[]">
-    <p>Senior <b name="father">Beggerson</b> and <b name="mother">Leka</b></p>
-    <ul>
-      <li name="sons">Mary</li>
-      <li name="sons">July</li>
-    </ul>
-  </div>
-</div>
-[Let's make it work](javascript:alert( JSON.stringify( document.getElementById('parents-dom'\).toObject(\) \) \))
 
 ----------
 
@@ -270,31 +174,6 @@ You can map DOM to an object.
         <option value="MI">Miami</option>
       </select>
     </form>
-<!-- -->
-<form id="form-dom">
-  <label>Description</label><br>
-  <textarea name="description">This is an awesome lib.</textarea><br>
-  <input type="radio" name="sex" value="Female"> Female
-  <input type="radio" name="sex" value="Male" checked="checked"> Male
-  <input type="radio" name="sex" value="Dont know"> Dont know<br>
-  <label>Is human?</label>
-  <input type="checkbox" name="human" checked="checked"><br>
-  <label>Want to receive emails?</label>
-  <input type="checkbox" name="emails"><br>
-  <label>Civil state</label>
-  <select name="civil_state">
-    <option>Single</option>
-    <option selected="selected">Married</option>
-    <option>I dont know</option>
-  </select><br>
-  <label>City</label>
-  <select name="city">
-    <option value="FOR">Fortaleza</option>
-    <option value="NY" selected="selected">New York</option>
-    <option value="MI">Miami</option>
-  </select>
-</form>
-[Let's make it work](javascript:alert( JSON.stringify( document.getElementById('form-dom'\).toObject(\) \) \))
 
 ----------
 
@@ -315,24 +194,3 @@ You can map DOM to an object.
         </div>
       </div>
     </div>
-<!-- -->
-<div id="people-dom">
-  <div name="people">
-    <label>Client ID</label>
-    <input type="text" name="client.id" value="2">
-    <label>Client Name</label>
-    <input type="text" name="client.name" value="Robert">
-    <div>
-      <label>Product ID</label>
-      <input type="text" name="product[Identify]" value="1">
-    </div>
-    <div>
-      <div>
-        <label>Product Name</label>
-        <input type="text" name="product[description]" value="Soccer shoes">
-      </div>
-    </div>
-  </div>
-</div>
-[Let's make it work](javascript:alert( JSON.stringify( document.getElementById('people-dom'\).toObject(\) \) \))
-

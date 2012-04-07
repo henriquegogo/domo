@@ -111,22 +111,13 @@
   </footer>
 </body>
 
-<script type="text/javascript">
-  function load(url, callback) {
-    var xmlhttp;
-    xmlhttp = (window.XMLHttpRequest) ?
-      new XMLHttpRequest() :
-      new ActiveXObject("Microsoft.XMLHTTP");
-    
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-        return callback(xmlhttp.responseText);
-    }
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-  }
+<link rel="stylesheet" type="text/css" href="highlight.min.css">
+<script type="text/javascript" src="highlight.min.js"></script>
+<script type="text/javascript" src="showdown.js"></script>
+<script type="text/javascript" src="src/domo.js"></script>
 
-object = {
+<script type="text/javascript">
+ object = {
   list: ["First","Second","Third"],
   listWithOne: ["One item list"],
   parents: [
@@ -142,24 +133,63 @@ object = {
   civil_state: "Married", city: "NY",
   people: 
     { client: { id: "2", name: "Robert" },
-product: {Identify: "1", description: "Soccer shoes" }
+      product: {Identify: "1", description: "Soccer shoes" }
     }
 };
-</script>
 
-<script type="text/javascript" src="highlight.min.js"></script>
-<link rel="stylesheet" type="text/css" href="highlight.min.css">
+function load(url, callback) {
+  var xmlhttp;
+  xmlhttp = (window.XMLHttpRequest) ?
+    new XMLHttpRequest() :
+    new ActiveXObject("Microsoft.XMLHTTP");
+  
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+      return callback(xmlhttp.responseText);
+  }
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
 
-<script type="text/javascript" src="showdown.js"></script>
-<script type="text/javascript">
+function runToDom() {
+  object.toDom( this.parentElement );
+}
+
+function runToObject() {
+  alert( JSON.stringify( this.parentElement.toObject() ) );
+}
+
+
+function applyMarkdown(text) {
   var converter = new Showdown.converter();
   var container = document.querySelector("section");
-  load("README.md", function(txt) {
-    container.innerHTML = converter.makeHtml(txt);
-    hljs.initHighlighting();
-  });
-</script>
+  container.innerHTML = converter.makeHtml(text);
+  hljs.initHighlighting();
+}
 
-<script type="text/javascript" src="src/domo.js"></script>
+function applyRunCode() {
+  var htmls = document.querySelectorAll("code.xml");
+
+  for (var i in htmls) {
+    var container = document.createElement("div");
+    var text = htmls[i].innerText;
+    
+    if (text) {
+      if (i <= 5)
+        container.innerHTML = "<a href='javascript:void(0)' onclick='runToDom.call(this)'>Let's do <b><i>object</i>.toDom()</b></a><br><br>";
+      else
+        container.innerHTML = "<a href='javascript:void(0)' onclick='runToObject.call(this)'>Let's do <b><i>element</i>.toObject()</b></a><br><br>";
+
+      container.innerHTML += text;
+      htmls[i].parentElement.parentElement.insertBefore(container, htmls[i].parentElement.nextSibling);
+    }
+  }
+}
+
+load("README.md", function(text) { 
+  applyMarkdown(text);
+  applyRunCode();
+});
+</script>
 
 </html>
