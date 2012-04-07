@@ -46,7 +46,7 @@
           if (options[i].value == value)
             options[i].selected = true;
         }
-      }
+      };
       
       var applyValues = function(tag, object, key) {
         key = "" + key;
@@ -91,7 +91,7 @@
             tag.parentElement.appendChild(clone);
           }
         }
-      }
+      };
 
       for (var i = 0; i < el.length; i++) {
         var tag = el[i];
@@ -120,7 +120,7 @@
   });
 
   // DOM to object
-  HTMLElement.prototype.toObject = function(oldResult) {
+  Element.prototype.toObject = function(oldResult) {
     var result = oldResult || {};
     var container = this;
     var el = container.children;
