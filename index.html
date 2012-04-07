@@ -26,7 +26,7 @@
     hr {
       clear: both;
       height: 10px;
-      background: 0;
+      background: none;
       border: none;
       border-bottom: 1px solid #AAA;
     }
@@ -39,7 +39,7 @@
       -moz-border-radius: 6px;
       -webkit-border-radius: 6px;
     }
-    header {
+    #header {
       position: relative;
       display: block;
       padding: 40px 0 10px;
@@ -47,25 +47,25 @@
       color: #FFF;
       background: #000;
     }
-    header h1 {
+    #header h1 {
       margin: 0;
       font-size: 60px;
       font-weight: normal;
     }
-    header h2 {
+    #header h2 {
       margin: 0;
     }
-    header img {
+    #header img {
       position: absolute;
       bottom: -38px;
       right: 0;
     }
-    section {
+    #section {
       margin: 0 auto;
       padding: 20px 0;
       width: 750px;
     }
-    footer {
+    #footer {
       position: relative;
       display: block;
       padding: 10px 0;
@@ -74,12 +74,12 @@
       color: #FFF;
       background: #000;
     }
-    footer a {
+    #footer a {
       font-weight: bold;
       text-decoration: none;
       color: #FFF;
     }
-    footer a:hover {
+    #footer a:hover {
       text-decoration: underline;
     }
     .container {
@@ -90,26 +90,26 @@
   </style>
 </head>
 <body>
-  <header>
+  <div id="header">
     <div class="container">
       <h1>DOMO</h1>
       <h2>Nicely sweet DOM-Object-DOM with simplicity</h2>
       <img src="logo.png">
     </div>
-  </header>
+  </div>
 
   <a href="http://github.com/henriquegogo/domo">
     <img alt="Fork me on GitHub" style="position: absolute; top: 0; right: 0; border: 0;" src="forkme.png">
   </a>
 
-  <section></section>
+  <div id="section"></div>
 
-  <footer>
+  <div id="footer">
     <div class="container">
       © 2012 <a href="http://gogs.com.br">Henrique Gogó</a>.
       All code provided is open source under the MIT License.
     </div>
-  </footer>
+  </div>
 </body>
 
 <link rel="stylesheet" type="text/css" href="highlight.min.css">
@@ -163,7 +163,7 @@ function runToObject() {
 
 function applyMarkdown(text) {
   var converter = new Showdown.converter();
-  var container = document.querySelector("section");
+  var container = document.getElementById("section");
   container.innerHTML = converter.makeHtml(text);
   hljs.initHighlighting();
 }
@@ -174,7 +174,7 @@ function applyRunCode() {
   for (var i in htmls) {
     var container = document.createElement("div");
     var text = htmls[i].textContent;
-    
+
     if (text) {
       if (i <= 5)
         container.innerHTML = "<a href='javascript:void(0)' onclick='runToDom.call(this)'>Let's do <b><i>object</i>.toDom()</b></a><br><br>";
