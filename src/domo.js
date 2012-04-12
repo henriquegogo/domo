@@ -165,3 +165,9 @@
   };
 })();
 
+function mkeys(o, keyArray) {
+  var key = keyArray.shift();
+  o[key] = {};
+  if (keyArray.length)
+    mkeys(o[key], keyArray);
+}
