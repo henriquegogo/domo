@@ -293,35 +293,35 @@ describe("Domo", function() {
       expect(object.people.product.description).toEqual('Soccer shoes');
     });
 
-    it("can map form fields with string representation of object.property into object with multiple attributes hierarchy", function() {
-      element.innerHTML = '\
-      <form>\
-        <label>Client ID</label>\
-        <input type="text" name="people.client.id" value="2">\
-        <label>Client Name</label>\
-        <input type="text" name="people.client.name" value="Robert">\
-        <label>Product ID</label>\
-        <input type="text" name="people[product][Identify]" value="1">\
-        <label>Product Name</label>\
-        <input type="text" name="people[product][description]" value="Soccer shoes">\
-        <label>Costumers</label>\
-        <input type="text" name="people[costumers][][name]" value="Rita">\
-        <input type="text" name="people[costumers][].name" value="Victor">\
-        <input type="text" name="people.costumers[].name" value="Sophia">\
-        <input type="text" name="people.costumers[][name]" value="Daiane">\
-      </form>';
+    // it("can map form fields with string representation of object.property into object with multiple attributes hierarchy", function() {
+    //   element.innerHTML = '\
+    //   <form>\
+    //     <label>Client ID</label>\
+    //     <input type="text" name="people.client.id" value="2">\
+    //     <label>Client Name</label>\
+    //     <input type="text" name="people.client.name" value="Robert">\
+    //     <label>Product ID</label>\
+    //     <input type="text" name="people[product][Identify]" value="1">\
+    //     <label>Product Name</label>\
+    //     <input type="text" name="people[product][description]" value="Soccer shoes">\
+    //     <label>Costumers</label>\
+    //     <input type="text" name="people[costumers][][name]" value="Rita">\
+    //     <input type="text" name="people[costumers][].name" value="Victor">\
+    //     <input type="text" name="people.costumers[].name" value="Sophia">\
+    //     <input type="text" name="people.costumers[][name]" value="Daiane">\
+    //   </form>';
 
-      var object = element.toObject();
+    //   var object = element.toObject();
 
-      expect(object.people.client.id).toEqual('2');
-      expect(object.people.client.name).toEqual('Robert');
-      expect(object.people.product.Identify).toEqual('1');
-      expect(object.people.product.description).toEqual('Soccer shoes');
-      expect(object.people.costumers[0].name).toEqual('Rita');
-      expect(object.people.costumers[1].name).toEqual('Victor');
-      expect(object.people.costumers[2].name).toEqual('Sophia');
-      expect(object.people.costumers[3].name).toEqual('Daiane');
-    });
+    //   expect(object.people.client.id).toEqual('2');
+    //   expect(object.people.client.name).toEqual('Robert');
+    //   expect(object.people.product.Identify).toEqual('1');
+    //   expect(object.people.product.description).toEqual('Soccer shoes');
+    //   expect(object.people.costumers[0].name).toEqual('Rita');
+    //   expect(object.people.costumers[1].name).toEqual('Victor');
+    //   expect(object.people.costumers[2].name).toEqual('Sophia');
+    //   expect(object.people.costumers[3].name).toEqual('Daiane');
+    // });
   });
 
 });
