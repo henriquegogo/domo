@@ -19,7 +19,7 @@ describe("Domo", function() {
 
             object.toDom(element);
             var items = element.findAll("[name=list]");
-
+console.log(items);
             expect(items.length).toEqual(3);
             expect(items[0].innerHTML).toEqual('First');
             expect(items[1].innerHTML).toEqual('Second');

@@ -133,9 +133,9 @@
                 key = key.replace(/\[\d*]$/, "");
 
                 var value = tag.children.length && tag.querySelector("[name]") ?
-                    tag.toObject() : tag.value || tag.textContent;
+                    tag.toObject() : tag.value || tag.textContent || tag.innerText;
 
-                value = (tag.tagName == 'SELECT' && !tag.value) ? "" :
+                value = (tag.tagName == 'SELECT' && !tag.value) ? tag.options[tag.selectedIndex].value :
                         (tag.type == 'checkbox') ? tag.checked :
                         (tag.type == 'radio' && !tag.checked) ? result[key] :
                         value;
