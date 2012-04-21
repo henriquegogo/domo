@@ -1,7 +1,4 @@
 describe("Domo", function() {
-    Element.prototype.find = Element.prototype.querySelector;
-    Element.prototype.findAll = Element.prototype.querySelectorAll;
-
     describe("Object to DOM", function() {
         var element;
 
@@ -18,8 +15,8 @@ describe("Domo", function() {
             </ul>';
 
             object.toDom(element);
-            var items = element.findAll("[name=list]");
-console.log(items);
+            var items = element.querySelectorAll("[name=list]");
+
             expect(items.length).toEqual(3);
             expect(items[0].innerHTML).toEqual('First');
             expect(items[1].innerHTML).toEqual('Second');
@@ -35,7 +32,7 @@ console.log(items);
             </ul>';
 
             object.toDom(element);
-            var items = element.findAll("[name='listWithOne[]']");
+            var items = element.querySelectorAll("[name='listWithOne[]']");
 
             expect(items.length).toEqual(1);
             expect(items[0].innerHTML).toEqual('One item list');
@@ -60,19 +57,19 @@ console.log(items);
             </div>';
 
             object.toDom(element);
-            var parents = element.findAll("[name='parents[]']");
+            var parents = element.querySelectorAll("[name='parents[]']");
 
             expect(parents.length).toEqual(2);
-            expect(parents[0].find("[name=father]").innerHTML).toEqual('Davidson');
-            expect(parents[0].find("[name=mother]").innerHTML).toEqual('Sarah');
-            expect(parents[0].findAll("[name=sons]").length).toEqual(2);
-            expect(parents[0].findAll("[name=sons]")[0].innerHTML).toEqual('Daniel');
-            expect(parents[0].findAll("[name=sons]")[1].innerHTML).toEqual('Michael');
-            expect(parents[1].find("[name=father]").innerHTML).toEqual('Beggerson');
-            expect(parents[1].find("[name=mother]").innerHTML).toEqual('Leka');
-            expect(parents[1].findAll("[name=sons]").length).toEqual(2);
-            expect(parents[1].findAll("[name=sons]")[0].innerHTML).toEqual('Mary');
-            expect(parents[1].findAll("[name=sons]")[1].innerHTML).toEqual('July');
+            expect(parents[0].querySelector("[name=father]").innerHTML).toEqual('Davidson');
+            expect(parents[0].querySelector("[name=mother]").innerHTML).toEqual('Sarah');
+            expect(parents[0].querySelectorAll("[name=sons]").length).toEqual(2);
+            expect(parents[0].querySelectorAll("[name=sons]")[0].innerHTML).toEqual('Daniel');
+            expect(parents[0].querySelectorAll("[name=sons]")[1].innerHTML).toEqual('Michael');
+            expect(parents[1].querySelector("[name=father]").innerHTML).toEqual('Beggerson');
+            expect(parents[1].querySelector("[name=mother]").innerHTML).toEqual('Leka');
+            expect(parents[1].querySelectorAll("[name=sons]").length).toEqual(2);
+            expect(parents[1].querySelectorAll("[name=sons]")[0].innerHTML).toEqual('Mary');
+            expect(parents[1].querySelectorAll("[name=sons]")[1].innerHTML).toEqual('July');
         });
 
         it("can set attribute value with variable marks", function() {
@@ -81,7 +78,7 @@ console.log(items);
             element.innerHTML = '<a name="name" href="/user/{name}"></a>';
 
             object.toDom(element);
-            var link = element.find("a");
+            var link = element.querySelector("a");
 
             setTimeout(function() {
                 expect(link.getAttribute('href')).toEqual('/user/David');
@@ -121,12 +118,12 @@ console.log(items);
             </form>';
 
             object.toDom(element);
-            var form = element.find("form");
+            var form = element.querySelector("form");
 
             expect(form.description.value).toEqual('This is an awesome lib.');
-            expect(form.find("[name=sex]:checked").value).toEqual('Male');
-            expect(form.find("[name=human]:checked")).toBeTruthy();
-            expect(form.find("[name=emails]:checked")).toBeNull();
+            expect(form.querySelector("[name=sex]:checked").value).toEqual('Male');
+            expect(form.querySelector("[name=human]:checked")).toBeTruthy();
+            expect(form.querySelector("[name=emails]:checked")).toBeNull();
             expect(form.civil_state.value).toEqual('Married');
             expect(form.city.value).toEqual('NY');
         });
@@ -158,10 +155,10 @@ console.log(items);
 
             object.toDom(element);
 
-            expect(element.find("[name='client.id']").value).toEqual('2');
-            expect(element.find("[name='client.name']").value).toEqual('Robert');
-            expect(element.find("[name='product[Identify]']").value).toEqual('1');
-            expect(element.find("[name='product[description]']").value).toEqual('Soccer shoes');
+            expect(element.querySelector("[name='client.id']").value).toEqual('2');
+            expect(element.querySelector("[name='client.name']").value).toEqual('Robert');
+            expect(element.querySelector("[name='product[Identify]']").value).toEqual('1');
+            expect(element.querySelector("[name='product[description]']").value).toEqual('Soccer shoes');
         });
     });
 
