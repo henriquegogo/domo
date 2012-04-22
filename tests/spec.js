@@ -13,7 +13,7 @@ describe("Domo", function() {
             <ul>\
             <li name="list"></li>\
             </ul>';
-
+            
             object.toDom(element);
             var items = element.querySelectorAll("[name=list]");
 

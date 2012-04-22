@@ -172,7 +172,7 @@ function applyRunCode() {
 
   for (var i in htmls) {
     var container = document.createElement("div");
-    var text = htmls[i].textContent;
+    var text = htmls[i].textContent || htmls[i].innerText;
 
     if (text) {
       if (i <= 5)

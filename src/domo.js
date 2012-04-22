@@ -80,7 +80,7 @@
         };
 
         var doArray = function(tag, arr, name) {
-            if (tag === tag.parentElement.querySelector("[name='"+name+"']:first-of-type")) {
+            if (tag === tag.parentElement.querySelector("[name='"+name+"']")) {
                 removeSiblings(tag, name);
                 applyValues(tag, arr, 0);
 
