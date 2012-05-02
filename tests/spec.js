@@ -14,7 +14,7 @@ describe("Domo", function() {
             <li name="list"></li>\
             </ul>';
             
-            object.toDom(element);
+            toDom(object, element);
             var items = element.querySelectorAll("[name=list]");
 
             expect(items.length).toEqual(3);
@@ -31,7 +31,7 @@ describe("Domo", function() {
             <li name="listWithOne[]"></li>\
             </ul>';
 
-            object.toDom(element);
+            toDom(object, element);
             var items = element.querySelectorAll("[name='listWithOne[]']");
 
             expect(items.length).toEqual(1);
@@ -56,9 +56,9 @@ describe("Domo", function() {
             </ul>\
             </div>';
 
-            object.toDom(element);
+            toDom(object, element);
             var parents = element.querySelectorAll("[name='parents[]']");
-
+            
             expect(parents.length).toEqual(2);
             expect(parents[0].querySelector("[name=father]").innerHTML).toEqual('Davidson');
             expect(parents[0].querySelector("[name=mother]").innerHTML).toEqual('Sarah');
@@ -77,7 +77,7 @@ describe("Domo", function() {
 
             element.innerHTML = '<a name="name" href="/user/{name}"></a>';
 
-            object.toDom(element);
+            toDom(object, element);
             var link = element.querySelector("a");
 
             setTimeout(function() {
@@ -117,7 +117,7 @@ describe("Domo", function() {
             </select>\
             </form>';
 
-            object.toDom(element);
+            toDom(object, element);
             var form = element.querySelector("form");
 
             expect(form.description.value).toEqual('This is an awesome lib.');
@@ -153,7 +153,7 @@ describe("Domo", function() {
             </div>\
             </div>';
 
-            object.toDom(element);
+            toDom(object, element);
 
             expect(element.querySelector("[name='client.id']").value).toEqual('2');
             expect(element.querySelector("[name='client.name']").value).toEqual('Robert');

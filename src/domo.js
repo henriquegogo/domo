@@ -16,8 +16,8 @@
     }
 
     // Object to DOM
-    Object.prototype.toDom = function(container) {
-        var object = this;
+    window.toDom = function(object, container) {
+        //var object = this;
         var container = container || document.body;
         var el = (container.name) ? [container] : container.children;
 
@@ -51,7 +51,7 @@
             key = "" + key;
             key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ? splitKey(tag, object, key) :
             isArray(object[key]) ? doArray(tag, object[key], name) :
-            isObject(object[key]) ? object[key].toDom(tag) :
+            isObject(object[key]) ? toDom(object[key], tag) :
             tag.tagName == 'IMG' ? tag.setAttribute('src', object[key]) :
             tag.tagName == 'SELECT' ? setSelectTagValue(tag, object[key]) :
             tag.type == 'checkbox' && object[key] ? tag.checked = true :
@@ -100,7 +100,7 @@
                 key = key.replace(/\[\d*]$/, "");
 
                 if (tag.children.length && tag.querySelector("[name]") && isObject(object[key]) ) {
-                    object[key].toDom(tag);
+                    toDom(object[key], tag);
 
                 } else {
                     uncheck(tag);
@@ -108,7 +108,7 @@
                 }
 
             } else {
-                object.toDom(tag);
+                toDom(object, tag);
             }
 
             applyAttributesVariables(tag, object);

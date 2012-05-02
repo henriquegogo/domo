@@ -152,7 +152,7 @@ function load(url, callback) {
 }
 
 function runToDom() {
-  object.toDom( this.parentElement );
+  toDom( object, this.parentElement );
 }
 
 function runToObject() {
@@ -176,7 +176,7 @@ function applyRunCode() {
 
     if (text) {
       if (i <= 5)
-        container.innerHTML = "<a href='javascript:void(0)' onclick='runToDom.call(this)'>Let's do <b><i>object</i>.toDom()</b></a><br><br>";
+        container.innerHTML = "<a href='javascript:void(0)' onclick='runToDom.call(this)'>Let's do <b>toDom(<i>object</i>)</b></a><br><br>";
       else
         container.innerHTML = "<a href='javascript:void(0)' onclick='runToObject.call(this)'>Let's do <b><i>element</i>.toObject()</b></a><br><br>";
 
