@@ -17,10 +17,9 @@
 
     // Object to DOM
     window.toDom = function(object, container) {
-        //var object = this;
         var container = container || document.body;
         var el = (container.name) ? [container] : container.children;
-
+        
         var uncheck = function(tag) {
             if (tag.type == 'checkbox' || tag.type == 'radio') {
                 tag.removeAttribute('checked');
