@@ -175,7 +175,7 @@ describe("Domo", function() {
             <li name="list">Third</li>\
             </ul>';
 
-            var object = element.toObject();
+            var object = toObject(element);
 
             expect(object.list.length).toEqual(3);
             expect(object.list[0]).toEqual('First');
@@ -189,7 +189,7 @@ describe("Domo", function() {
             <li name="listWithOne[]">One item list</li>\
             </ul>';
 
-            var object = element.toObject();
+            var object = toObject(element);
 
             expect(object.listWithOne.length).toEqual(1);
             expect(object.listWithOne[0]).toEqual('One item list');
@@ -212,7 +212,7 @@ describe("Domo", function() {
             </ul>\
             </div>';
 
-            var object = element.toObject();
+            var object = toObject(element);
 
             expect(object.parents.length).toEqual(2);
             expect(object.parents[0].father).toEqual('Davidson');
@@ -253,7 +253,7 @@ describe("Domo", function() {
             </select>\
             </form>';
 
-            var object = element.toObject();
+            var object = toObject(element);
 
             expect(object.description).toEqual('This is an awesome lib.');
             expect(object.sex).toEqual('Male');
@@ -282,7 +282,7 @@ describe("Domo", function() {
             </div>\
             </div>';
 
-            var object = element.toObject();
+            var object = toObject(element);
 
             expect(object.people.client.id).toEqual('2');
             expect(object.people.client.name).toEqual('Robert');

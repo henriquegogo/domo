@@ -117,29 +117,29 @@
     };
 
     // DOM to object
-    Element.prototype.toObject = function(oldResult) {
+    window.toObject = function(target, oldResult) {
         var result = oldResult || {};
-        var container = this;
-        var el = container.children;
+        var container = $(target);
+        var elements = container.children();
 
-        for (var i = 0; i < el.length; i++) {
-            var tag = el[i];
-            var key = name = tag.getAttribute("name");
+        elements.each(function() {
+            var tag = $(this);
+            var key = name = tag.attr("name");
 
             if (key) {
                 key = key.replace(/\[\d*]$/, "");
 
-                var value = tag.children.length && tag.querySelector("[name]") ?
-                    tag.toObject() : tag.value || tag.textContent || tag.innerText;
+                var value = tag.children().length && tag.find("[name]").length ?
+                            toObject(tag[0]) : tag.val() || tag.text();
 
-                value = (tag.tagName == 'SELECT' && !tag.value) ? tag.options[tag.selectedIndex].value :
-                        (tag.type == 'checkbox') ? tag.checked :
-                        (tag.type == 'radio' && !tag.checked) ? result[key] :
+                value = (tag.prop('tagName') == 'SELECT' && !tag.val()) ? tag[0].options[tag[0].selectedIndex].value :
+                        (tag.attr('type') == 'checkbox') ? tag[0].checked :
+                        (tag.attr('type') == 'radio' && !tag[0].checked) ? result[key] :
                         value;
 
-                value = result[key] && !isArray(result[key]) && tag.type != 'radio' ?
+                value = result[key] && !$.isArray(result[key]) && tag.attr('type') != 'radio' ?
                         Array(result[key], value) :
-                        isArray(result[key]) ? append(result[key], value) :
+                        $.isArray(result[key]) ? append(result[key], value) :
                         name.match(/\[\d*]$/) ? [value] : value;
 
                 if ( key.match(/\./) || key.match(/\[[a-zA-Z].*]/) ) {
@@ -153,10 +153,10 @@
                     result[key] = value;
 
             } else {
-                var childNode = tag.toObject(result);
-                result = mergeObject(result, childNode);
+                var childNode = toObject(tag[0], result);
+                result = $.extend(result, childNode);
             }
-        }
+        });
 
         return result;
     };
