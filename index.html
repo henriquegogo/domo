@@ -157,7 +157,7 @@ function runToDom() {
 }
 
 function runToObject() {
-  alert( JSON.stringify( this.parentElement.toObject() ) );
+  alert( JSON.stringify( toObject(this.parentElement) ) );
 }
 
 
@@ -179,7 +179,7 @@ function applyRunCode() {
       if (i <= 5)
         container.innerHTML = "<a href='javascript:void(0)' onclick='runToDom.call(this)'>Let's do <b>toDom(<i>object</i>)</b></a><br><br>";
       else
-        container.innerHTML = "<a href='javascript:void(0)' onclick='runToObject.call(this)'>Let's do <b><i>element</i>.toObject()</b></a><br><br>";
+        container.innerHTML = "<a href='javascript:void(0)' onclick='runToObject.call(this)'>Let's do <b>toObject(<i>element</i>)</b></a><br><br>";
 
       container.innerHTML += text;
       htmls[i].parentElement.parentElement.insertBefore(container, htmls[i].parentElement.nextSibling);
