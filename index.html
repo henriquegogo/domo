@@ -102,7 +102,359 @@
     <img alt="Fork me on GitHub" style="position: absolute; top: 0; right: 0; border: 0;" src="forkme.png">
   </a>
 
-  <div id="section"></div>
+<div id="section"><h1 id="objecttodom">Object to DOM</h1>
+
+<p>You can fill DOM values with an object.</p>
+
+<p><strong>object.toDom()</strong> is the same as <strong>object.toDom(</strong> <em>document.body</em> <strong>)</strong></p>
+
+<hr>
+
+<h3 id="filllistwithanarrayobject">Fill list with an array object</h3>
+
+<pre><code class="php"><span class="keyword">var</span> object = { <span class="keyword">list</span>: [<span class="string">"First"</span>,<span class="string">"Second"</span>,<span class="string">"Third"</span>] }
+</code></pre>
+
+<!-- -->
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"list"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToDom.call(this)">Let's do <b>toDom(<i>object</i>)</b></a><br><br><ul>
+  <li name="list"></li>
+</ul>
+</div>
+
+<hr>
+
+<h3 id="filllistifnamelikearraywithanarrayobject">Fill list if name like array with an array object</h3>
+
+<pre><code class="cs"><span class="keyword">var</span> <span class="keyword">object</span> = { listWithOne: [<span class="string">"One item list"</span>] };
+</code></pre>
+
+<!-- -->
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"listWithOne[]"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToDom.call(this)">Let's do <b>toDom(<i>object</i>)</b></a><br><br><ul>
+  <li name="listWithOne[]"></li>
+</ul>
+</div>
+
+<hr>
+
+<h3 id="changenestedproprietiesinarraytags">Change nested proprieties in array tags</h3>
+
+<pre><code class="cs"><span class="keyword">var</span> <span class="keyword">object</span> = { parents: [
+               { father: <span class="string">"Davidson"</span>, mother: <span class="string">"Sarah"</span>, sons: 
+                 [<span class="string">"Daniel"</span>, <span class="string">"Michael"</span>]
+               },
+               { father: <span class="string">"Beggerson"</span>, mother: <span class="string">"Leka"</span>, sons:
+                 [<span class="string">"Mary"</span>,<span class="string">"July"</span>]
+               }
+             ] };
+</code></pre>
+
+<!-- -->
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">name</span>=<span class="value">"parents[]"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span>Senior <span class="tag">&lt;<span class="title">b</span> <span class="attribute">name</span>=<span class="value">"father"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span> and <span class="tag">&lt;<span class="title">b</span> <span class="attribute">name</span>=<span class="value">"mother"</span>&gt;</span><span class="tag">&lt;/<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"sons"</span>&gt;</span><span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToDom.call(this)">Let's do <b>toDom(<i>object</i>)</b></a><br><br><div name="parents[]">
+  <p>Senior <b name="father"></b> and <b name="mother"></b></p>
+  <ul>
+    <li name="sons"></li>
+  </ul>
+</div>
+</div>
+
+<hr>
+
+<h3 id="setattributevaluewithvariablemarks">Set attribute value with variable marks</h3>
+
+<pre><code class="cs"><span class="keyword">var</span> <span class="keyword">object</span> = { name: <span class="string">"David"</span> };
+</code></pre>
+
+<!-- -->
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">a</span> <span class="attribute">name</span>=<span class="value">"name"</span> <span class="attribute">href</span>=<span class="value">"/user/{name}"</span>&gt;</span><span class="tag">&lt;/<span class="title">a</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToDom.call(this)">Let's do <b>toDom(<i>object</i>)</b></a><br><br><a name="name" href="/user/{name}"></a>
+</div>
+
+<hr>
+
+<h3 id="fillformfields">Fill form fields</h3>
+
+<pre><code class="cs"><span class="keyword">var</span> <span class="keyword">object</span> = { description: <span class="string">"This is an awesome lib."</span>,
+               sex: <span class="string">"Male"</span>, human: <span class="keyword">true</span>, emails: <span class="keyword">false</span>,
+               civil_state: <span class="string">"Married"</span>, city: <span class="string">"NY"</span>
+             };
+</code></pre>
+
+<!-- -->
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">form</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Description<span class="tag">&lt;/<span class="title">label</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">name</span>=<span class="value">"description"</span>&gt;</span><span class="tag">&lt;/<span class="title">textarea</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">value</span>=<span class="value">"Female"</span>&gt;</span> Female
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">value</span>=<span class="value">"Male"</span>&gt;</span> Male
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">value</span>=<span class="value">"Dont know"</span>&gt;</span> Dont know<span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Is human?<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"human"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Want to receive emails?<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"emails"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Civil state<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"civil_state"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span>&gt;</span>Single<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span>&gt;</span>Married<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span>&gt;</span>I dont know<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>City<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"city"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"FOR"</span>&gt;</span>Fortaleza<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"NY"</span>&gt;</span>New York<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"MI"</span>&gt;</span>Miami<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToDom.call(this)">Let's do <b>toDom(<i>object</i>)</b></a><br><br><form>
+  <label>Description</label><br>
+  <textarea name="description"></textarea><br>
+  <input type="radio" name="sex" value="Female"> Female
+  <input type="radio" name="sex" value="Male"> Male
+  <input type="radio" name="sex" value="Dont know"> Dont know<br>
+  <label>Is human?</label>
+  <input type="checkbox" name="human"><br>
+  <label>Want to receive emails?</label>
+  <input type="checkbox" name="emails"><br>
+  <label>Civil state</label>
+  <select name="civil_state">
+    <option>Single</option>
+    <option>Married</option>
+    <option>I dont know</option>
+  </select><br>
+  <label>City</label>
+  <select name="city">
+    <option value="FOR">Fortaleza</option>
+    <option value="NY">New York</option>
+    <option value="MI">Miami</option>
+  </select>
+</form>
+</div>
+
+<hr>
+
+<h3 id="fillformfieldswithstringrepresentationofobjectpropert">Fill form fields with string representation of object.propert</h3>
+
+<pre><code class="ruby"><span class="identifier">var</span> <span class="identifier">object</span> = { <span class="identifier">people</span><span class="symbol">:</span> 
+               { <span class="identifier">client</span><span class="symbol">:</span> { <span class="identifier"><span class="keymethods">id</span></span><span class="symbol">:</span> <span class="string">"2"</span>, <span class="identifier"><span class="keymethods">name</span></span><span class="symbol">:</span> <span class="string">"Robert"</span> },
+                 <span class="identifier">product</span><span class="symbol">:</span> {<span class="constant">Identify</span><span class="symbol">:</span> <span class="string">"1"</span>, <span class="identifier">description</span><span class="symbol">:</span> <span class="string">"Soccer shoes"</span> }
+               }
+             };
+</code></pre>
+
+<!-- -->
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">name</span>=<span class="value">"people"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Client ID<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"client.id"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Client Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"client.name"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span>&gt;</span>Product ID<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"product[Identify]"</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">label</span>&gt;</span>Product Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"product[description]"</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToDom.call(this)">Let's do <b>toDom(<i>object</i>)</b></a><br><br><div name="people">
+  <label>Client ID</label>
+  <input type="text" name="client.id"><br>
+  <label>Client Name</label>
+  <input type="text" name="client.name">
+  <div>
+    <label>Product ID</label>
+    <input type="text" name="product[Identify]">
+  </div>
+  <div>
+    <div>
+      <label>Product Name</label>
+      <input type="text" name="product[description]">
+    </div>
+  </div>
+</div>
+</div>
+
+<hr>
+
+<h1 id="domtoobject">DOM to Object</h1>
+
+<p>You can map DOM to an object.</p>
+
+<p><strong>element.toObject()</strong></p>
+
+<hr>
+
+<h3 id="mapalistelementtoanarrayobject">Map a list element to an array object</h3>
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"list"</span>&gt;</span>First<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"list"</span>&gt;</span>Second<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"list"</span>&gt;</span>Third<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToObject.call(this)">Let's do <b><i>element</i>.toObject()</b></a><br><br><ul>
+  <li name="list">First</li>
+  <li name="list">Second</li>
+  <li name="list">Third</li>
+</ul>
+</div>
+
+<hr>
+
+<h3 id="mapanelementwithasingleitemmarkedtobeanarraytoanarrayobject">Map an element with a single item (marked to be an array) to an array object</h3>
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"listWithOne[]"</span>&gt;</span>One item list<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToObject.call(this)">Let's do <b><i>element</i>.toObject()</b></a><br><br><ul>
+  <li name="listWithOne[]">One item list</li>
+</ul>
+</div>
+
+<hr>
+
+<h3 id="mapnestedtagsinanobject">Map nested tags in an object</h3>
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">name</span>=<span class="value">"parents[]"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>Senior <span class="tag">&lt;<span class="title">b</span> <span class="attribute">name</span>=<span class="value">"father"</span>&gt;</span>Davidson<span class="tag">&lt;/<span class="title">b</span>&gt;</span> and <span class="tag">&lt;<span class="title">b</span> <span class="attribute">name</span>=<span class="value">"mother"</span>&gt;</span>Sarah<span class="tag">&lt;/<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"sons"</span>&gt;</span>Daniel<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"sons"</span>&gt;</span>Michael<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">name</span>=<span class="value">"parents[]"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">p</span>&gt;</span>Senior <span class="tag">&lt;<span class="title">b</span> <span class="attribute">name</span>=<span class="value">"father"</span>&gt;</span>Beggerson<span class="tag">&lt;/<span class="title">b</span>&gt;</span> and <span class="tag">&lt;<span class="title">b</span> <span class="attribute">name</span>=<span class="value">"mother"</span>&gt;</span>Leka<span class="tag">&lt;/<span class="title">b</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">ul</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"sons"</span>&gt;</span>Mary<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">li</span> <span class="attribute">name</span>=<span class="value">"sons"</span>&gt;</span>July<span class="tag">&lt;/<span class="title">li</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">ul</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToObject.call(this)">Let's do <b><i>element</i>.toObject()</b></a><br><br><div>
+  <div name="parents[]">
+    <p>Senior <b name="father">Davidson</b> and <b name="mother">Sarah</b></p>
+    <ul>
+      <li name="sons">Daniel</li>
+      <li name="sons">Michael</li>
+    </ul>
+  </div>
+  <div name="parents[]">
+    <p>Senior <b name="father">Beggerson</b> and <b name="mother">Leka</b></p>
+    <ul>
+      <li name="sons">Mary</li>
+      <li name="sons">July</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<hr>
+
+<h3 id="mapformfieldsintoobject">Map form fields into object</h3>
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">form</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Description<span class="tag">&lt;/<span class="title">label</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">textarea</span> <span class="attribute">name</span>=<span class="value">"description"</span>&gt;</span>This is an awesome lib.<span class="tag">&lt;/<span class="title">textarea</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">value</span>=<span class="value">"Female"</span>&gt;</span> Female
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">value</span>=<span class="value">"Male"</span> <span class="attribute">checked</span>=<span class="value">"checked"</span>&gt;</span> Male
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"radio"</span> <span class="attribute">name</span>=<span class="value">"sex"</span> <span class="attribute">value</span>=<span class="value">"Dont know"</span>&gt;</span> Dont know<span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Is human?<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"human"</span> <span class="attribute">checked</span>=<span class="value">"checked"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Want to receive emails?<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"checkbox"</span> <span class="attribute">name</span>=<span class="value">"emails"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Civil state<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"civil_state"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span>&gt;</span>Single<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">selected</span>=<span class="value">"selected"</span>&gt;</span>Married<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span>&gt;</span>I dont know<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>City<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">select</span> <span class="attribute">name</span>=<span class="value">"city"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"FOR"</span>&gt;</span>Fortaleza<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"NY"</span> <span class="attribute">selected</span>=<span class="value">"selected"</span>&gt;</span>New York<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">option</span> <span class="attribute">value</span>=<span class="value">"MI"</span>&gt;</span>Miami<span class="tag">&lt;/<span class="title">option</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">select</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">form</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToObject.call(this)">Let's do <b><i>element</i>.toObject()</b></a><br><br><form>
+  <label>Description</label><br>
+  <textarea name="description">This is an awesome lib.</textarea><br>
+  <input type="radio" name="sex" value="Female"> Female
+  <input type="radio" name="sex" value="Male" checked="checked"> Male
+  <input type="radio" name="sex" value="Dont know"> Dont know<br>
+  <label>Is human?</label>
+  <input type="checkbox" name="human" checked="checked"><br>
+  <label>Want to receive emails?</label>
+  <input type="checkbox" name="emails"><br>
+  <label>Civil state</label>
+  <select name="civil_state">
+    <option>Single</option>
+    <option selected="selected">Married</option>
+    <option>I dont know</option>
+  </select><br>
+  <label>City</label>
+  <select name="city">
+    <option value="FOR">Fortaleza</option>
+    <option value="NY" selected="selected">New York</option>
+    <option value="MI">Miami</option>
+  </select>
+</form>
+</div>
+
+<hr>
+
+<h3 id="mapformfieldswithstringrepresentationofobjectpropertyintoobject">Map form fields with string representation of object.property into object</h3>
+
+<pre><code class="xml"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">name</span>=<span class="value">"people"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Client ID<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"client.id"</span> <span class="attribute">value</span>=<span class="value">"2"</span>&gt;</span><span class="tag">&lt;<span class="title">br</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">label</span>&gt;</span>Client Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"client.name"</span> <span class="attribute">value</span>=<span class="value">"Robert"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">label</span>&gt;</span>Product ID<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"product[Identify]"</span> <span class="attribute">value</span>=<span class="value">"1"</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">label</span>&gt;</span>Product Name<span class="tag">&lt;/<span class="title">label</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">name</span>=<span class="value">"product[description]"</span> <span class="attribute">value</span>=<span class="value">"Soccer shoes"</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</code></pre><div><a href="javascript:void(0)" onclick="runToObject.call(this)">Let's do <b><i>element</i>.toObject()</b></a><br><br><div name="people">
+  <label>Client ID</label>
+  <input type="text" name="client.id" value="2"><br>
+  <label>Client Name</label>
+  <input type="text" name="client.name" value="Robert">
+  <div>
+    <label>Product ID</label>
+    <input type="text" name="product[Identify]" value="1">
+  </div>
+  <div>
+    <div>
+      <label>Product Name</label>
+      <input type="text" name="product[description]" value="Soccer shoes">
+    </div>
+  </div>
+</div>
+</div></div>
 
   <div id="footer">
     <div class="container">
@@ -112,8 +464,8 @@
   </div>
 
 <link rel="stylesheet" type="text/css" href="highlight.min.css">
-<script type="text/javascript" src="highlight.min.js"></script>
-<script type="text/javascript" src="showdown.js"></script>
+<!-- <script type="text/javascript" src="highlight.min.js"></script>
+<script type="text/javascript" src="showdown.js"></script> -->
 <script type="text/javascript" src="src/domo.js"></script>
 
 <script type="text/javascript">
@@ -137,34 +489,12 @@ object = {
     }
 };
 
-function load(url, callback) {
-  var xmlhttp;
-  xmlhttp = (window.XMLHttpRequest) ?
-    new XMLHttpRequest() :
-    new ActiveXObject("Microsoft.XMLHTTP");
-  
-  xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
-      return callback(xmlhttp.responseText);
-  }
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send();
-}
-
 function runToDom() {
   toDom( object, this.parentElement );
 }
 
 function runToObject() {
   alert( JSON.stringify( this.parentElement.toObject() ) );
-}
-
-
-function applyMarkdown(text) {
-  var converter = new Showdown.converter();
-  var container = document.getElementById("section");
-  container.innerHTML = converter.makeHtml(text);
-  hljs.initHighlighting();
 }
 
 function applyRunCode() {
@@ -186,10 +516,37 @@ function applyRunCode() {
   }
 }
 
+/*
+function load(url, callback) {
+  var xmlhttp;
+  xmlhttp = (window.XMLHttpRequest) ?
+    new XMLHttpRequest() :
+    new ActiveXObject("Microsoft.XMLHTTP");
+  
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+      return callback(xmlhttp.responseText);
+  }
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
+*/
+
+/*
+function applyMarkdown(text) {
+  var converter = new Showdown.converter();
+  var container = document.getElementById("section");
+  container.innerHTML = converter.makeHtml(text);
+  hljs.initHighlighting();
+}
+*/
+
+/*
 load("README.md", function(text) { 
   applyMarkdown(text);
   applyRunCode();
 });
+*/
 </script>
 
 <!-- ############################## GOOGLE ANALYTICS ############################## --> 
